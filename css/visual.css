@@ -20,6 +20,7 @@ body {
     transform:translateY(-50%);
     text-align:center;
     padding:20px;
+    width:100%;
 }
 .card .box h2 {
     font-size:25px;
@@ -138,6 +139,7 @@ body {
     height:375px;
     left: 50%;
 }
+
 
 .navbar-default {
     background: #4a69bd;

@@ -14,13 +14,15 @@
     <nav class="navbar-default">
       <div class="container-fluid">
         <div class="navbar-header" style="padding-left: 10px">
-          <button type="button" class="btn btn-default navbar-btn pull-left">
+          <button type="button" class="btn btn-default navbar-btn pull-left" onclick="window.location.href='searchPage.html'">
             <span class="glyphicon glyphicon-chevron-left"></span>
           </button>
-          <div class="navbar-text navbar-brand-centered"><h3>Artificial Intelligence</h3></div>
+          <div class="navbar-text navbar-brand-centered"><h3>Artificical Intelligence</h3></div>
         </div>
       </div>
     </nav>
+      
+      
     
     
     <div class="container-fluid content">
@@ -30,34 +32,38 @@
         
         <div>
             <div class="tabs">
-              <div class="tab-button-outer">
-                <ul id="tab-button">
-                  <li onclick="displayLineGraph()">
-                    <a href="#">Line</a>
-                  </li>
-                  <li onclick="displayBarGraph()">
-                    <a href="#">Bar</a>
-                  </li>
-                  <li onclick="displayCircleGraph()">
-                    <a href="#">Circle</a>
-                  </li>
-                </ul>
+          <div class="tab-button-outer">
+            <ul id="tab-button">
+              <li><a href="#tab01">Line</a></li>
+              <li><a href="#tab02">Bar</a></li>
+              <li><a href="#tab03">Circle</a></li>
+            </ul>
+          </div>
+          <div class="tab-select-outer">
+            <select id="tab-select">
+              <option value="#tab01">Tab 1</option>
+              <option value="#tab02">Tab 2</option>
+              <option value="#tab03">Tab 3</option>
+            </select>
+          </div>
+
+          <div id="tab01" class="tab-contents">
+              <div>
+                <img class="tabs-img" src="imgs/line-graph.png" alt="Line">
               </div>
-              <div class="tab-select-outer">
-                <select id="tab-select">
-                  <option value="#tab01">Tab 1</option>
-                  <option value="#tab02">Tab 2</option>
-                  <option value="#tab03">Tab 3</option>
-                </select>
+          </div>
+          <div id="tab02" class="tab-contents">
+              <div>
+                <img class="tabs-img" src="imgs/bar-graph.png" alt="Bar">
               </div>
-    
-              <div id="tab01" class="tab-contents">
-                  <div>
-                    <img class="tabs-img" src="imgs/line-graph.png" alt="Line" id="graphImg">
-                  </div>
+          </div>
+          <div id="tab03" class="tab-contents">
+                <div>
+                <img class="tabs-img" src="imgs/circle-graph.png" alt="Circle">
               </div>
-    
-            </div>
+          </div>
+
+        </div>
         </div>
         
         <br/><br/>
