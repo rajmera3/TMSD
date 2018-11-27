@@ -139,17 +139,22 @@ body {
     left: 50%;
 }
 
-
+.navbar-default {
+    background: #4a69bd;
+    
+}
 .navbar-brand-centered {
     position: absolute;
     left: 50%;
     display: block;
     text-align: center;
+    text-align: center;
     background-color: transparent;
     color: #000;
 }
-.navbar-brand-centered h3{margin:0;margin-left: -30px;margin-top:-2px;color: #fff;}
+.navbar-brand-centered h3{margin:0;margin-left: -120px;margin-top:-2px;color: #fff;}
     .navbar>.container .navbar-brand-centered,
     .navbar>.container-fluid .navbar-brand-centered {
         margin-left: -80px;
+        background: #4a69bd
 }
