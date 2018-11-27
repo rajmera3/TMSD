@@ -1,6 +1,5 @@
 function searchButton() {
-  window.location.href = "https://google.com";
-
+  window.location.href = "searchPage.html";
 }
 
 function displayLineGraph() {
