@@ -1,73 +1,75 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<link rel="stylesheet" href="css/visual.css">
-<script src="js/visual.js"></script>
-
-
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header" style="padding-left: 10px">
-      <button type="button" class="btn btn-default navbar-btn pull-left">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </button>
-      <div class="navbar-text navbar-brand-centered"><h3>Artificical Intelligence</h3></div>
-    </div>
-  </div>
-</nav>
-
-
-<div class="container-fluid content">
-
-    <br/><br/>
-
+<html>
+  <head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
     
-    <div>
-        <div class="tabs">
-          <div class="tab-button-outer">
-            <ul id="tab-button">
-              <li><a href="#tab01">Line</a></li>
-              <li><a href="#tab02">Bar</a></li>
-              <li><a href="#tab03">Circle</a></li>
-            </ul>
-          </div>
-          <div class="tab-select-outer">
-            <select id="tab-select">
-              <option value="#tab01">Tab 1</option>
-              <option value="#tab02">Tab 2</option>
-              <option value="#tab03">Tab 3</option>
-            </select>
-          </div>
-
-          <div id="tab01" class="tab-contents">
-              <div>
-                <img class="tabs-img" src="imgs/line-graph.png" alt="Line">
-              </div>
-          </div>
-          <div id="tab02" class="tab-contents">
-              <div>
-                <img class="tabs-img" src="imgs/bar-graph.png" alt="Bar">
-              </div>
-          </div>
-          <div id="tab03" class="tab-contents">
-                <div>
-                <img class="tabs-img" src="imgs/circle-graph.png" alt="Circle">
-              </div>
-          </div>
-
+    <link rel="stylesheet" href="css/visual.css">
+    <script src="js/visual.js"></script>
+    <script src="js/main.js"></script>
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header" style="padding-left: 10px">
+          <button type="button" class="btn btn-default navbar-btn pull-left">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+          <div class="navbar-text navbar-brand-centered"><h3>Artificial Intelligence</h3></div>
         </div>
-    </div>
+      </div>
+    </nav>
     
-    <br/><br/>
-    <div>
-        <div class="card">
-            <div class="box">
-                <h2><span>Definition</span><br></h2>
-                <p> The theory and development of computer systems able to perform tasks that normally require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.</p>
+    
+    <div class="container-fluid content">
+    
+        <br/><br/>
+    
+        
+        <div>
+            <div class="tabs">
+              <div class="tab-button-outer">
+                <ul id="tab-button">
+                  <li onclick="displayLineGraph()">
+                    <a href="#">Line</a>
+                  </li>
+                  <li onclick="displayBarGraph()">
+                    <a href="#">Bar</a>
+                  </li>
+                  <li onclick="displayCircleGraph()">
+                    <a href="#">Circle</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="tab-select-outer">
+                <select id="tab-select">
+                  <option value="#tab01">Tab 1</option>
+                  <option value="#tab02">Tab 2</option>
+                  <option value="#tab03">Tab 3</option>
+                </select>
+              </div>
+    
+              <div id="tab01" class="tab-contents">
+                  <div>
+                    <img class="tabs-img" src="imgs/line-graph.png" alt="Line" id="graphImg">
+                  </div>
+              </div>
+    
             </div>
         </div>
+        
+        <br/><br/>
+        <div>
+            <div class="card">
+                <div class="box">
+                    <h2><span>Definition</span><br></h2>
+                    <p> The theory and development of computer systems able to perform tasks that normally require human intelligence, such as visual perception, speech recognition, decision-making, and translation between languages.</p>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    
-</div>
+  </body>
+</html>
