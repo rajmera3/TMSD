@@ -54,70 +54,10 @@ export default function Results({ results, queryState, trackClick }) {
               onClick={e => trackClick(getRaw(result, "id"))}
               dangerouslySetInnerHTML={createMarkup(getSnippet(result, "name"))}
             />
-            <Lisence value={getRaw(result, "license")} />
           </div>
 
           <div className="result__body">
             <Description value={getSnippet(result, "description")} />
-            <ul className="result__details">
-              <LineItem label="Version" value={getRaw(result, "version")}>
-                {value => <span className="result__version">{value}</span>}
-              </LineItem>
-              <LineItem label="Home Page" value={getRaw(result, "homepage")}>
-                {value => (
-                  <a
-                    target="_blank subtle-link"
-                    href={getRaw(result, "homepage")}
-                  >
-                    {value}
-                  </a>
-                )}
-              </LineItem>
-              <LineItem
-                label="Dependencies"
-                value={getRaw(result, "dependencies")}
-              >
-                {values =>
-                  values.map(value => (
-                    <span key={value}>
-                      <FilterLink
-                        name="dependencies"
-                        value={value}
-                        queryState={queryState}
-                      >
-                        {value}
-                      </FilterLink>
-                    </span>
-                  ))
-                }
-              </LineItem>
-              <LineItem label="License" value={getRaw(result, "license")}>
-                {value => value.join(", ")}
-              </LineItem>
-              <LineItem label="Keywords" value={getRaw(result, "keywords")}>
-                {values =>
-                  values.map((value, index) => (
-                    <span key={`${value}-${index}`}>
-                      <FilterLink
-                        name="keywords"
-                        value={value}
-                        queryState={queryState}
-                      >
-                        {value}
-                      </FilterLink>
-                    </span>
-                  ))
-                }
-              </LineItem>
-            </ul>
-          </div>
-
-          <div className="result__footer">
-            <div className="result__owner">
-              <LineItem label="Owners" value={getRaw(result, "owners")}>
-                {value => value.join(", ")}
-              </LineItem>
-            </div>
           </div>
         </li>
       ))}
