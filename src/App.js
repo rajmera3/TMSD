@@ -40,16 +40,13 @@ class App extends Component {
                               />
                             </div>
                             <h1 className="search-demo__title">
-                              Package Search
+                              Time Machine Space Dinosaur
                             </h1>
-                            <h3 className="search-demo__sub-heading powered-by">
-                              <img src={poweredBy} alt="Powered by Swiftype" />
-                            </h3>
                           </div>
                           <div className="search-demo__input-wrapper">
                             <input
                               className="search-demo__text-input"
-                              placeholder="Search node packages&#8230;"
+                              placeholder="Search science fiction term or author&#8230;"
                               value={query}
                               onChange={e =>
                                 searchActions.updateQuery(e.target.value)
