@@ -1,21 +1,4 @@
 import React from "react";
-import FilterLink from "./FilterLink";
-
-function LineItem({ label, value, children }) {
-  if (!value) return null;
-  if (Array.isArray(value) && !value.length) return null;
-  return (
-    <li>
-      <strong>{label}</strong>: {children(value)}
-    </li>
-  );
-}
-
-function Lisence({ value, children }) {
-  if (!value) return null;
-  if (Array.isArray(value) && !value.length) return null;
-  return <div className="result__lisence">{value}</div>;
-}
 
 function Description({ value, children }) {
   if (!value) return null;

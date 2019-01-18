@@ -6,7 +6,6 @@ import Pagination from "./Pagination";
 import Results from "./Results";
 import Search from "./Search";
 import Totals from "./Totals";
-import Facets from "./Facets";
 
 import packageIcon from "./icons/icon-package.svg";
 import poweredBy from "./images/powered-by@2x.png";
@@ -62,20 +61,9 @@ class App extends Component {
 
                         <div className="search-demo__body">
                           <div className="search-results">
-                            <Facets
-                              facets={searchResults.facets}
-                              filters={searchResults.filters}
-                              queryState={queryState}
-                            />
                             <div className="results">
                               <div className="results__header">
                                 <Totals {...searchResults.pageState} />
-                                <div className="results__powered-by powered-by">
-                                  <img
-                                    src="https://app.swiftype.com/assets/embed/powered-by@2x.png"
-                                    alt="Powered by Swiftype"
-                                  />
-                                </div>
                               </div>
                               <div className="results__body">
                                 <Results
