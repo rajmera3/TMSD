@@ -12,70 +12,70 @@ const databaseClient = createDatabaseClient();
 //   engineName: "node-modules"
 // });
 
-const QUERY_OPTIONS = {
-  search_fields: {
-    name: {},
-    description: {},
-    keywords: {},
-    owners: {},
-    dependencies: {}
-  },
-  result_fields: {
-    id: { raw: {} },
-    name: {
-      raw: {},
-      snippet: {
-        size: 200,
-        fallback: true
-      }
-    },
-    version: { raw: {} },
-    license: { raw: {} },
-    description: {
-      snippet: {
-        size: 200,
-        fallback: true
-      }
-    },
-    keywords: {
-      raw: {},
-      snippet: {
-        size: 200,
-        fallback: true
-      }
-    },
-    repository: { raw: {} },
-    owners: {
-      raw: {},
-      snippet: {
-        size: 200,
-        fallback: true
-      }
-    },
-    dependencies: {
-      raw: {},
-      snippet: {
-        size: 200,
-        fallback: true
-      }
-    },
-    homepage: { raw: {} }
-  },
-  facets: {
-    license: {
-      type: "value",
-      size: 10
-    },
-    keywords: {
-      type: "value",
-      size: 10
-    },
-    dependencies: {
-      type: "value",
-      size: 10
-    }
-  }
-};
+// const QUERY_OPTIONS = {
+//   search_fields: {
+//     name: {},
+//     description: {},
+//     keywords: {},
+//     owners: {},
+//     dependencies: {}
+//   },
+//   result_fields: {
+//     id: { raw: {} },
+//     name: {
+//       raw: {},
+//       snippet: {
+//         size: 200,
+//         fallback: true
+//       }
+//     },
+//     version: { raw: {} },
+//     license: { raw: {} },
+//     description: {
+//       snippet: {
+//         size: 200,
+//         fallback: true
+//       }
+//     },
+//     keywords: {
+//       raw: {},
+//       snippet: {
+//         size: 200,
+//         fallback: true
+//       }
+//     },
+//     repository: { raw: {} },
+//     owners: {
+//       raw: {},
+//       snippet: {
+//         size: 200,
+//         fallback: true
+//       }
+//     },
+//     dependencies: {
+//       raw: {},
+//       snippet: {
+//         size: 200,
+//         fallback: true
+//       }
+//     },
+//     homepage: { raw: {} }
+//   },
+//   facets: {
+//     license: {
+//       type: "value",
+//       size: 10
+//     },
+//     keywords: {
+//       type: "value",
+//       size: 10
+//     },
+//     dependencies: {
+//       type: "value",
+//       size: 10
+//     }
+//   }
+// };
 
 const FILTERS_WHITELIST = ["dependencies", "license", "keywords"];
 
@@ -132,38 +132,37 @@ export default class Search extends Component {
   };
 
   updateResults = debounce(({ query, page = 1, filters }) => {
-    let resultList = databaseClient.search(query, page, 10);
-    console.log(resultList);
-    // .then(resultList => {
-    // console.log(resultList);
-    // client
-    //   .search(query, {
-    //     ...QUERY_OPTIONS,
-    //     filters: {
-    //       all: filters
-    //     },
-    //     page: {
-    //       size: 10,
-    //       current: page
-    //     }
-    //   })
-    //   .then(
-    //     resultList => {
-    this.setState({
-      pageState: {
-        currentPage: resultList.info.meta.page.current,
-        pageSize: resultList.info.meta.page.size,
-        totalPages: resultList.info.meta.page.total_pages,
-        totalResults: resultList.info.meta.page.total_results
+    databaseClient.search(query, page, 10).then(
+      resultList => {
+        // console.log(resultList);
+        // client
+        //   .search(query, {
+        //     ...QUERY_OPTIONS,
+        //     filters: {
+        //       all: filters
+        //     },
+        //     page: {
+        //       size: 10,
+        //       current: page
+        //     }
+        //   })
+        //   .then(
+        //     resultList => {
+        this.setState({
+          pageState: {
+            currentPage: resultList.info.meta.page.current,
+            pageSize: resultList.info.meta.page.size,
+            totalPages: resultList.info.meta.page.total_pages,
+            totalResults: resultList.info.meta.page.total_results
+          },
+          query: query,
+          results: resultList.results
+        });
       },
-      query: query,
-      results: resultList.results
-    });
-    //   },
-    //   error => {
-    //     console.log(`error: ${error}`);
-    //   }
-    // );
+      error => {
+        console.log(`error: ${error}`);
+      }
+    );
   }, 200);
 
   // trackClick = ({ query, documentId, requestId }) => {
