@@ -1,13 +1,16 @@
 import { Component } from "react";
 import { debounce } from "lodash";
 import queryString from "query-string";
-import * as SwiftypeAppSearch from "swiftype-app-search-javascript";
+// import * as SwiftypeAppSearch from "swiftype-app-search-javascript";
+import createDatabaseClient from "./Database";
 
-const client = SwiftypeAppSearch.createClient({
-  accountHostKey: process.env.REACT_APP_HOST_IDENTIFIER,
-  apiKey: process.env.REACT_APP_SEARCH_KEY,
-  engineName: "node-modules"
-});
+const databaseClient = createDatabaseClient();
+
+// const client = SwiftypeAppSearch.createClient({
+//   accountHostKey: process.env.REACT_APP_HOST_IDENTIFIER,
+//   apiKey: process.env.REACT_APP_SEARCH_KEY,
+//   engineName: "node-modules"
+// });
 
 const QUERY_OPTIONS = {
   search_fields: {
@@ -129,48 +132,49 @@ export default class Search extends Component {
   };
 
   updateResults = debounce(({ query, page = 1, filters }) => {
-    client
-      .search(query, {
-        ...QUERY_OPTIONS,
-        filters: {
-          all: filters
-        },
-        page: {
-          size: 10,
-          current: page
-        }
-      })
-      .then(
-        resultList => {
-          this.setState({
-            facets: resultList.info.facets,
-            filters: filters.reduce((p, n) => ({ ...p, ...n }), {}),
-            pageState: {
-              currentPage: resultList.info.meta.page.current,
-              pageSize: resultList.info.meta.page.size,
-              totalPages: resultList.info.meta.page.total_pages,
-              totalResults: resultList.info.meta.page.total_results
-            },
-            query: query,
-            requestId: resultList.info.meta.request_id,
-            results: resultList.results
-          });
-        },
-        error => {
-          console.log(`error: ${error}`);
-        }
-      );
+    let resultList = databaseClient.search(query, page, 10);
+    console.log(resultList);
+    // .then(resultList => {
+    // console.log(resultList);
+    // client
+    //   .search(query, {
+    //     ...QUERY_OPTIONS,
+    //     filters: {
+    //       all: filters
+    //     },
+    //     page: {
+    //       size: 10,
+    //       current: page
+    //     }
+    //   })
+    //   .then(
+    //     resultList => {
+    this.setState({
+      pageState: {
+        currentPage: resultList.info.meta.page.current,
+        pageSize: resultList.info.meta.page.size,
+        totalPages: resultList.info.meta.page.total_pages,
+        totalResults: resultList.info.meta.page.total_results
+      },
+      query: query,
+      results: resultList.results
+    });
+    //   },
+    //   error => {
+    //     console.log(`error: ${error}`);
+    //   }
+    // );
   }, 200);
 
-  trackClick = ({ query, documentId, requestId }) => {
-    client.click({ query, documentId, requestId });
-    // We'll return undefined here. We don't necessarily want calling code to wait for a response.
-  };
+  // trackClick = ({ query, documentId, requestId }) => {
+  //   client.click({ query, documentId, requestId });
+  //   // We'll return undefined here. We don't necessarily want calling code to wait for a response.
+  // };
 
   // This is so that we don't have to pass `requestId` and `query` deep down
   // the tree.
   curriedTrackClick = (query, requestId) => documentId => {
-    this.trackClick({ query, requestId, documentId });
+    // this.trackClick({ query, requestId, documentId });
   };
 
   getQueryState = () => queryString.parse(this.props.location.search);
