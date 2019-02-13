@@ -20,6 +20,7 @@ html {
  */
 body {
   margin: 0;
+  background: #f7f7f7;
 }
 
 /**
@@ -737,4 +738,15 @@ a.subtle-link:hover {
   content: "\AB";
   font-size: 16px;
   line-height: 1.5;
+}
+
+/***** Additional TMSD Changes ******/
+.graph {
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+  padding: 1.5rem 0 1rem 0;
+  font-size: 0.85em;
+  color: #828282;
+  padding: 30px;
 }
