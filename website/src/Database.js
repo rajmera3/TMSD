@@ -11,16 +11,18 @@ var config = {
 firebase.initializeApp(config);
 
 class DatabaseClient {
-  constructor() {}
+  constructor() {
+    this.collection = firebase.firestore().collection("data");
+  }
 
   async getQueryMatches(query) {
     var queryMatches = [];
 
     query = query.toLowerCase();
-    let collection = firebase.firestore().collection("data");
+    // let collection = firebase.firestore().collection("data");
 
     // search query in related words field
-    let querySnapshot = await collection
+    let querySnapshot = await this.collection
       .where("related_terms", "array-contains", query)
       .get();
 
@@ -35,6 +37,12 @@ class DatabaseClient {
     });
 
     return queryMatches;
+  }
+
+  async getAllTerms() {
+    // returns list of strings (each string is a term)
+    const snapshot = await this.collection.get();
+    return snapshot.docs.map(doc => doc.id);
   }
 
   createSnippet(raw, query) {
