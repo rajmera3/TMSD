@@ -405,7 +405,7 @@ a.subtle-link:hover {
   transform: translateY(0px);
 }
 .search-demo.active-search {
-  transform: translateY(-150px);
+  transform: translateY(-175px);
 }
 .search-demo__content {
   overflow: hidden;
