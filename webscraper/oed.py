@@ -41,8 +41,11 @@ def _getStartDate(soup):
 	return soup.find(class_="senseWrap").div.find(class_="quotationDate").text.split("—")[0].replace("a", "Ante ").replace("c", "Circa ")
 
 def searchWord(word):
+	word = word.lower()
 	soup = _getWordSoup(word)
-	if not soup: return None
+	if not soup:
+		# print('Could not find word ({}) in OED'.format(word))
+		return None
 	definition = _getDefinition(soup)
 	start_date = _getStartDate(soup)
 	return definition, start_date
