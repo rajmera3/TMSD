@@ -35,15 +35,6 @@ const dates = [
   }
 ];
 
-//var title = "Machine Learning";
-
-/*
-var alien = databaseClient.ref('data/' + '/aliens');
-alien.on('name', function(snapshot) {
-  title = snapshot.val();
-});
-*/
-
 class TermPage extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +53,9 @@ class TermPage extends React.Component {
           console.log("Document name: " + doc.data().name);
 
           this.setState({
-            title: doc.data().name
+            name: doc.data().name,
+            dates: doc.data().dates,
+            description: doc.data().description
           });
         }
       })
@@ -77,19 +70,19 @@ class TermPage extends React.Component {
     return (
       <div>
         <div style={styles.header}>
-          <h1 style={styles.headerText}> {this.state.title} </h1>
+          <h1 style={styles.headerText}> {this.state.name} </h1>
         </div>
 
         <div style={styles.graph} class="graph">
           <LineChart
             height="42vh"
-            data={dates}
+            data={this.state.dates}
             colors={["#3899E8", "#F55452", "9831FF"]}
           />
         </div>
 
         <div style={styles.definition} class="graph">
-          <h1 style={styles.headerText}>Hello</h1>
+          <p style={styles.headerText}> {this.state.description} }</p>
         </div>
       </div>
     );
@@ -107,7 +100,7 @@ const styles = {
     textAlign: "center"
   },
   graph: {
-    width: "60vw",
+    width: "90vw",
     height: "50vh",
     margin: "auto",
     marginTop: "20px"
