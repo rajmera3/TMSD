@@ -11,6 +11,7 @@ import packageIcon from "./icons/icon-package.svg";
 import poweredBy from "./images/powered-by@2x.png";
 import TermPage from "./TermPage";
 
+/*
 class App extends Component {
   render() {
     return (
@@ -94,15 +95,12 @@ class App extends Component {
     );
   }
 }
+*/
 
-/*
 class App extends Component {
   render() {
-    return (
-      <TermPage/>
-    )
+    return <TermPage />;
   }
 }
-*/
 
 export default App;

@@ -2,6 +2,9 @@ import React from "react";
 
 import ReactChartkick, { LineChart } from "react-chartkick";
 import Chart from "chart.js";
+import createDatabaseClient from "./Database";
+
+const databaseClient = createDatabaseClient();
 
 ReactChartkick.addAdapter(Chart);
 
@@ -32,7 +35,31 @@ const dates = [
   }
 ];
 
-const title = "Machine Learning";
+var title = "Machine Learning";
+
+var alien = databaseClient.collection
+  .doc("aliens")
+  .get()
+  .then(doc => {
+    if (!doc.exists) {
+      console.log("No such document!");
+    } else {
+      console.log("Document data:", doc.data());
+      console.log("Document name: " + doc.data().name);
+    }
+  })
+  .catch(err => {
+    console.log("Error getting document", err);
+  });
+
+console.log(alien);
+
+/*
+var alien = databaseClient.ref('data/' + '/aliens');
+alien.on('name', function(snapshot) {
+  title = snapshot.val();
+});
+*/
 
 class TermPage extends React.Component {
   render() {
