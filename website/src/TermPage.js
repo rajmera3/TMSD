@@ -35,24 +35,7 @@ const dates = [
   }
 ];
 
-var title = "Machine Learning";
-
-var alien = databaseClient.collection
-  .doc("aliens")
-  .get()
-  .then(doc => {
-    if (!doc.exists) {
-      console.log("No such document!");
-    } else {
-      console.log("Document data:", doc.data());
-      console.log("Document name: " + doc.data().name);
-    }
-  })
-  .catch(err => {
-    console.log("Error getting document", err);
-  });
-
-console.log(alien);
+//var title = "Machine Learning";
 
 /*
 var alien = databaseClient.ref('data/' + '/aliens');
@@ -62,11 +45,39 @@ alien.on('name', function(snapshot) {
 */
 
 class TermPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { title: " " };
+  }
+
+  componentWillMount() {
+    var alien = databaseClient.collection
+      .doc("aliens")
+      .get()
+      .then(doc => {
+        if (!doc.exists) {
+          console.log("No such document!");
+        } else {
+          console.log("Document data:", doc.data());
+          console.log("Document name: " + doc.data().name);
+
+          this.setState({
+            title: doc.data().name
+          });
+        }
+      })
+      .catch(err => {
+        console.log("Error getting document", err);
+      });
+
+    console.log(alien);
+  }
+
   render() {
     return (
       <div>
         <div style={styles.header}>
-          <h1 style={styles.headerText}> {title} </h1>
+          <h1 style={styles.headerText}> {this.state.title} </h1>
         </div>
 
         <div style={styles.graph} class="graph">
