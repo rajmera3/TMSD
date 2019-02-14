@@ -32,18 +32,54 @@ const dates = [
   }
 ];
 
+const title = "Machine Learning";
+
 class TermPage extends React.Component {
   render() {
     return (
       <div>
-        <div
-          style={{ width: "50vw", margin: "auto", marginTop: "20px" }}
-          class="graph"
-        >
-          <LineChart data={dates} colors={["#3899E8", "#F55452", "9831FF"]} />
+        <div style={styles.header}>
+          <h1 style={styles.headerText}> {title} </h1>
+        </div>
+
+        <div style={styles.graph} class="graph">
+          <LineChart
+            height="42vh"
+            data={dates}
+            colors={["#3899E8", "#F55452", "9831FF"]}
+          />
+        </div>
+
+        <div style={styles.definition} class="graph">
+          <h1 style={styles.headerText}>Hello</h1>
         </div>
       </div>
     );
   }
 }
+
+const styles = {
+  header: {
+    width: "75vw",
+    margin: "auto",
+    marginTop: "20px",
+    textAlign: "center"
+  },
+  headerText: {
+    textAlign: "center"
+  },
+  graph: {
+    width: "60vw",
+    height: "50vh",
+    margin: "auto",
+    marginTop: "20px"
+  },
+  definition: {
+    width: "60vw",
+    height: "30vh",
+    margin: "auto",
+    marginTop: "40px"
+  }
+};
+
 export default TermPage;
