@@ -82,7 +82,7 @@ class TermPage extends React.Component {
         </div>
 
         <div style={styles.definition} class="graph">
-          <p style={styles.headerText}> {this.state.description} }</p>
+          <p style={styles.headerText}> {this.state.description }</p>
         </div>
       </div>
     );

@@ -18,7 +18,7 @@ class DatabaseClient {
   async getQueryMatches(query) {
     var queryMatches = [];
 
-    query = query.toLowerCase();
+    query = query.trim().toLowerCase();
     // let collection = firebase.firestore().collection("data");
 
     // search query in related words field
