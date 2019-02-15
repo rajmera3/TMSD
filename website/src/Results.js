@@ -1,4 +1,5 @@
 import React from "react";
+import queryString from "query-string";
 
 function Description({ value, children }) {
   if (!value) return null;
@@ -23,7 +24,7 @@ function getSnippet(result, field) {
   return (result.data[field] || {}).snippet;
 }
 
-export default function Results({ results, queryState, trackClick, setClickedResult }) {
+export default function Results({ results, queryState, trackClick, history }) {
   return (
     <ul>
       {results.map(result => (
@@ -36,7 +37,8 @@ export default function Results({ results, queryState, trackClick, setClickedRes
               rel="noopener noreferrer"
               onClick={e => {
                 trackClick(getRaw(result, "id"));
-                setClickedResult(getRaw(result, "name"));
+                // setClickedResult(getRaw(result, "name"));
+                history.push("?" + queryString.stringify({ v: getRaw(result, "name") }));
               }}
               dangerouslySetInnerHTML={createMarkup(getSnippet(result, "name"))}
             />

@@ -1,49 +1,50 @@
-import React from "react";
+import React, {Component} from "react";
 
 import ReactChartkick, { LineChart } from "react-chartkick";
 import Chart from "chart.js";
+import queryString from "query-string";
 import createDatabaseClient from "./Database";
 
 const databaseClient = createDatabaseClient();
 
 ReactChartkick.addAdapter(Chart);
 
-const dates = [
-  {
-    name: "Academia",
-    data: {
-      1985: 5,
-      1990: 300,
-      1995: 900,
-      2000: 3000,
-      2005: 2500,
-      2010: 1000,
-      2015: 3
-    }
-  },
-  {
-    name: "Science Fiction",
-    data: {
-      "1985": 3000,
-      "1990": 700,
-      "1995": 300,
-      "2000": 8000,
-      "2005": 1200,
-      "2010": 8000,
-      "2015": 3
-    }
-  }
-];
+// const dates = [
+//   {
+//     name: "Academia",
+//     data: {
+//       1985: 5,
+//       1990: 300,
+//       1995: 900,
+//       2000: 3000,
+//       2005: 2500,
+//       2010: 1000,
+//       2015: 3
+//     }
+//   },
+//   {
+//     name: "Science Fiction",
+//     data: {
+//       "1985": 3000,
+//       "1990": 700,
+//       "1995": 300,
+//       "2000": 8000,
+//       "2005": 1200,
+//       "2010": 8000,
+//       "2015": 3
+//     }
+//   }
+// ];
 
-class TermPage extends React.Component {
+class TermPage extends Component {
   constructor(props) {
     super(props);
     this.state = { title: " " };
   }
 
   componentWillMount() {
-    var alien = databaseClient.collection
-      .doc("aliens")
+    databaseClient.collection
+      .doc(this.props.term.toLowerCase())
       .get()
       .then(doc => {
         if (!doc.exists) {
@@ -62,9 +63,9 @@ class TermPage extends React.Component {
       .catch(err => {
         console.log("Error getting document", err);
       });
-
-    console.log(alien);
   }
+
+  getQueryState = () => queryString.parse(this.props.location.search);
 
   render() {
     return (
@@ -73,7 +74,7 @@ class TermPage extends React.Component {
           <h1 style={styles.headerText}> {this.state.name} </h1>
         </div>
 
-        <div style={styles.graph} class="graph">
+        <div style={styles.graph} className="graph">
           <LineChart
             height="42vh"
             data={this.state.dates}

@@ -64,6 +64,7 @@ class DatabaseClient {
       var results = [];
       queryMatches.forEach(result => {
         results.push({
+          id: result.id,
           data: {
             name: {
               raw: result.name,
@@ -89,6 +90,7 @@ class DatabaseClient {
         },
         results: results
       };
+      console.log(results);
       return pageState;
     });
   }

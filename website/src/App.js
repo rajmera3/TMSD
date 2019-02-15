@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import queryString from "query-string";
 
 import ScrollToTop from "./ScrollToTop";
 import Pagination from "./Pagination";
@@ -19,97 +20,105 @@ class App extends Component {
     }
   }
 
-  setClickedResult = (clickedResult) => {
-    this.setState({
-      clickedResult: clickedResult
-    });
+  getSearchComponent = (location, history) => {
+    return (<Search location={location} history={history}>
+      {({
+        query,
+        queryState,
+        queryClass,
+        searchActions,
+        searchResults
+      }) => (
+        <div>
+          <div className="site-background" />
+          <div className={`search-demo live-filtering ${queryClass}`}>
+            <div className="search-demo__content">
+              <div className="search-demo__header">
+                <div className="search-demo__headings">
+                  <div className="search-demo__icon-wrap">
+                    <img
+                      src={packageIcon}
+                      alt="Dog Icon"
+                      className="search-demo__icon"
+                    />
+                  </div>
+                  <h1 className="search-demo__title">
+                    Time Machine Space Dinosaur
+                  </h1>
+                </div>
+                <div className="search-demo__input-wrapper">
+                  <input
+                    className="search-demo__text-input"
+                    placeholder="Search science fiction term or author&#8230;"
+                    value={query}
+                    onChange={e =>
+                      searchActions.updateQuery(e.target.value)
+                    }
+                  />
+                  <input
+                    type="submit"
+                    value="Search"
+                    className="button search-demo__submit"
+                  />
+                </div>
+              </div>
+              <div className="search-demo__body">
+                <div className="search-results">
+                  <div className="results">
+                    <div className="results__header">
+                      <Totals {...searchResults.pageState} />
+                    </div>
+                    <div className="results__body">
+                      <Results
+                        results={searchResults.results}
+                        queryState={queryState}
+                        trackClick={searchActions.trackClick}
+                        history={history}
+                      />
+                    </div>
+                    <div className="results__footer">
+                      <Pagination
+                        {...searchResults.pageState}
+                        onPage={searchActions.updatePage}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </Search>);
   }
 
-  render() {
-    //  setClickedResult={this.setClickedResult}
-    if (this.state.clickedResult) {
-      return <TermPage />
+  getVisualizationComponent = (location, history, term) => {
+    return (<TermPage location={location} history={history} term={term}/>);
+  }
+
+  getComponentToRender = (location, history) => {
+    var url = queryString.parse(location.search);
+    if ("v" in url) {
+      // visualizations
+      return this.getVisualizationComponent(location, history, url["v"]);
     } else {
-      return (
-        <Router>
-          <ScrollToTop>
-            <Route>
-              {({ location, history }) => (
-                <Search location={location} history={history}>
-                  {({
-                    query,
-                    queryState,
-                    queryClass,
-                    searchActions,
-                    searchResults
-                  }) => (
-                    <div>
-                      <div className="site-background" />
-                      <div className={`search-demo live-filtering ${queryClass}`}>
-                        <div className="search-demo__content">
-                          <div className="search-demo__header">
-                            <div className="search-demo__headings">
-                              <div className="search-demo__icon-wrap">
-                                <img
-                                  src={packageIcon}
-                                  alt="Dog Icon"
-                                  className="search-demo__icon"
-                                />
-                              </div>
-                              <h1 className="search-demo__title">
-                                Time Machine Space Dinosaur
-                              </h1>
-                            </div>
-                            <div className="search-demo__input-wrapper">
-                              <input
-                                className="search-demo__text-input"
-                                placeholder="Search science fiction term or author&#8230;"
-                                value={query}
-                                onChange={e =>
-                                  searchActions.updateQuery(e.target.value)
-                                }
-                              />
-                              <input
-                                type="submit"
-                                value="Search"
-                                className="button search-demo__submit"
-                              />
-                            </div>
-                          </div>
-                          <div className="search-demo__body">
-                            <div className="search-results">
-                              <div className="results">
-                                <div className="results__header">
-                                  <Totals {...searchResults.pageState} />
-                                </div>
-                                <div className="results__body">
-                                  <Results
-                                    results={searchResults.results}
-                                    queryState={queryState}
-                                    trackClick={searchActions.trackClick}
-                                    setClickedResult={this.setClickedResult}
-                                  />
-                                </div>
-                                <div className="results__footer">
-                                  <Pagination
-                                    {...searchResults.pageState}
-                                    onPage={searchActions.updatePage}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </Search>
-              )}
-            </Route>
-          </ScrollToTop>
-        </Router>
-      );
+      // search
+      return this.getSearchComponent(location, history);
     }
+  };
+
+  render() {
+    return (
+      <Router>
+        <ScrollToTop>
+          <Route>
+            {({ location, history }) => (
+              this.getComponentToRender(location, history)
+            )}
+          </Route>
+        </ScrollToTop>
+      </Router>
+    );
   }
 }
 
