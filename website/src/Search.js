@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { debounce } from "lodash";
 import queryString from "query-string";
 import createDatabaseClient from "./Database";
@@ -63,15 +63,49 @@ export default class Search extends Component {
     databaseClient.search(query, page, 10).then(
       resultList => {
         // console.log(resultList);
-        this.setState({
-          pageState: {
+        const pageState = {
             currentPage: resultList.info.meta.page.current,
             pageSize: resultList.info.meta.page.size,
             totalPages: resultList.info.meta.page.total_pages,
             totalResults: resultList.info.meta.page.total_results
-          },
+          };
+
+        this.setState({
+          pageState: pageState,
           query: query,
           results: resultList.results
+        });
+
+        // const {
+        //   facets,
+        //   filters,
+        //   _pageState,
+        //   query,
+        //   requestId,
+        //   results
+        // } = this.state;
+        const queryClass = this.state.query ? "active-search" : "";
+        var facets = this.state.facets;
+        var filters = this.state.filters;
+        var requestId = this.state.requestId;
+        var results = this.state.results
+        this.props.setAppState({
+          query: this.getQueryState(),
+          queryState: this.getQueryState(),
+          queryClass: queryClass,
+          searchActions: {
+            trackClick: this.curriedTrackClick(this.state.query, this.state.requestId),
+            updatePage: this.updatePage,
+            updateQuery: this.updateQuery
+          },
+          searchResults: {
+            facets,
+            filters,
+            pageState,
+            query,
+            requestId,
+            results
+          }
         });
       },
       error => {
@@ -104,35 +138,39 @@ export default class Search extends Component {
   }
 
   render() {
-    const { children } = this.props;
-    const {
-      facets,
-      filters,
-      pageState,
-      query,
-      requestId,
-      results
-    } = this.state;
-    const { q } = this.getQueryState();
-    const queryClass = query ? "active-search" : "";
+    // const { children } = this.props;
+    // const {
+    //   facets,
+    //   filters,
+    //   pageState,
+    //   query,
+    //   requestId,
+    //   results
+    // } = this.state;
+    // const { q } = this.getQueryState();
+    // const queryClass = query ? "active-search" : "";
 
-    return children({
-      query: q,
-      queryState: this.getQueryState(),
-      queryClass: queryClass,
-      searchActions: {
-        trackClick: this.curriedTrackClick(query, requestId),
-        updatePage: this.updatePage,
-        updateQuery: this.updateQuery
-      },
-      searchResults: {
-        facets,
-        filters,
-        pageState,
-        query,
-        requestId,
-        results
-      }
-    });
+    // return children({
+    //   query: q,
+    //   queryState: this.getQueryState(),
+    //   queryClass: queryClass,
+    //   searchActions: {
+    //     trackClick: this.curriedTrackClick(query, requestId),
+    //     updatePage: this.updatePage,
+    //     updateQuery: this.updateQuery
+    //   },
+    //   searchResults: {
+    //     facets,
+    //     filters,
+    //     pageState,
+    //     query,
+    //     requestId,
+    //     results
+    //   }
+    // });
+
+    return (
+      <div/>
+      );
   }
 }

@@ -12,23 +12,49 @@ import poweredBy from "./images/powered-by@2x.png";
 import TermPage from "./TermPage";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: "",
+      queryClass: "",
+      queryState: {q: ""},
+      searchActions: {
+        trackClick: (documentId) => {},
+        updatePage: (newPage) => {},
+        updateQuery: (query) => {}
+      },
+      searchResults: {
+        facets: {},
+        filters: {},
+        pageState: {
+          currentPage: 1,
+          pageSize: 10,
+          totalPages: 0,
+          totalResults: 0
+        },
+        query: "",
+        requestId: "",
+        results: []
+      }
+    }
+  }
+
+  setAppState = (newState) => {
+    this.setState(newState);
+  }
+
   render() {
+    console.log("render");
     return (
       <Router>
         <ScrollToTop>
           <Route>
             {({ location, history }) => (
-              <Search location={location} history={history}>
-                {({
-                  query,
-                  queryState,
-                  queryClass,
-                  searchActions,
-                  searchResults
-                }) => (
+              <div>
+              <Search location={location} history={history} setAppState={this.setAppState} />
                   <div>
                     <div className="site-background" />
-                    <div className={`search-demo live-filtering ${queryClass}`}>
+                    <div className={`search-demo live-filtering ${this.state.queryClass}`}>
                       <div className="search-demo__content">
                         <div className="search-demo__header">
                           <div className="search-demo__headings">
@@ -47,9 +73,9 @@ class App extends Component {
                             <input
                               className="search-demo__text-input"
                               placeholder="Search science fiction term or author&#8230;"
-                              value={query}
+                              value={this.state.query.q}
                               onChange={e =>
-                                searchActions.updateQuery(e.target.value)
+                                this.state.searchActions.updateQuery(e.target.value)
                               }
                             />
                             <input
@@ -64,29 +90,28 @@ class App extends Component {
                           <div className="search-results">
                             <div className="results">
                               <div className="results__header">
-                                <Totals {...searchResults.pageState} />
+                                <Totals {...this.state.searchResults.pageState} />
                               </div>
                               <div className="results__body">
                                 <Results
-                                  results={searchResults.results}
-                                  queryState={queryState}
-                                  trackClick={searchActions.trackClick}
+                                  results={this.state.searchResults.results}
+                                  queryState={this.state.queryState}
+                                  trackClick={this.state.searchActions.trackClick}
                                 />
                               </div>
                               <div className="results__footer">
                                 <Pagination
-                                  {...searchResults.pageState}
-                                  onPage={searchActions.updatePage}
+                                  {...this.state.searchResults.pageState}
+                                  onPage={this.state.searchActions.updatePage}
                                 />
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                      </div>
                     </div>
                   </div>
-                )}
-              </Search>
             )}
           </Route>
         </ScrollToTop>
