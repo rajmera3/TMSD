@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
 function Description({ value, children }) {
   if (!value) return null;
@@ -31,10 +32,8 @@ export default function Results({ results, queryState, trackClick }) {
           <div className="result__header">
             <a
               className="result__title"
-              href={`https://www.npmjs.com/package/${getRaw(result, "name")}`}
-              target="_blank"
+              href={"/term"}
               rel="noopener noreferrer"
-              onClick={e => trackClick(getRaw(result, "id"))}
               dangerouslySetInnerHTML={createMarkup(getSnippet(result, "name"))}
             />
           </div>
