@@ -42,8 +42,12 @@ class TermPage extends React.Component {
   }
 
   componentWillMount() {
+    var currentLocation = decodeURI(window.location.href);
+    var term = currentLocation.split(/"/)[1].toLocaleLowerCase();
+    console.log(term);
+
     var alien = databaseClient.collection
-      .doc("aliens")
+      .doc(term)
       .get()
       .then(doc => {
         if (!doc.exists) {
@@ -82,7 +86,7 @@ class TermPage extends React.Component {
         </div>
 
         <div style={styles.definition} class="graph">
-          <p style={styles.headerText}> {this.state.description} }</p>
+          <p style={styles.defText}> {this.state.description} }</p>
         </div>
       </div>
     );
@@ -103,13 +107,17 @@ const styles = {
     width: "90vw",
     height: "50vh",
     margin: "auto",
-    marginTop: "20px"
+    marginTop: "40px"
   },
   definition: {
     width: "60vw",
-    height: "30vh",
+    height: "20vh",
     margin: "auto",
     marginTop: "40px"
+  },
+  defText: {
+    textAlign: "left",
+    color: "black"
   }
 };
 
