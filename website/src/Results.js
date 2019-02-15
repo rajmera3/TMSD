@@ -32,7 +32,7 @@ export default function Results({ results, queryState, trackClick }) {
           <div className="result__header">
             <a
               className="result__title"
-              href={"/term"}
+              href={"/v=" + JSON.stringify(getRaw(result, "name"))}
               rel="noopener noreferrer"
               dangerouslySetInnerHTML={createMarkup(getSnippet(result, "name"))}
             />

@@ -15,7 +15,7 @@ class App extends Component {
       <Router>
         <div>
           <Route exact path="/" component={MainPage} />
-          <Route path="/term" component={TermPage} />
+          <Route path="/v=:id" component={TermPage} />
         </div>
       </Router>
     );
