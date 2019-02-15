@@ -102,28 +102,4 @@ class MainPage extends React.Component {
   }
 }
 
-const styles = {
-  header: {
-    width: "75vw",
-    margin: "auto",
-    marginTop: "20px",
-    textAlign: "center"
-  },
-  headerText: {
-    textAlign: "center"
-  },
-  graph: {
-    width: "90vw",
-    height: "50vh",
-    margin: "auto",
-    marginTop: "20px"
-  },
-  definition: {
-    width: "60vw",
-    height: "30vh",
-    margin: "auto",
-    marginTop: "40px"
-  }
-};
-
 export default MainPage;
