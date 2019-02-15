@@ -27,7 +27,8 @@ class DatabaseClient {
       .get();
 
     querySnapshot.forEach(docSnapshot => {
-      let doc = docSnapshot.data();
+      var doc = docSnapshot.data();
+      doc['id'] = docSnapshot.id;
       if (doc.name.toLowerCase() == query) {
         // if name matches query, put first
         queryMatches.unshift(doc);
@@ -64,8 +65,8 @@ class DatabaseClient {
       var results = [];
       queryMatches.forEach(result => {
         results.push({
-          id: result.id,
           data: {
+            id: result.id,
             name: {
               raw: result.name,
               snippet: this.createSnippet(result.name, query)
@@ -90,7 +91,6 @@ class DatabaseClient {
         },
         results: results
       };
-      console.log(results);
       return pageState;
     });
   }

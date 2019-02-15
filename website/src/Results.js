@@ -38,7 +38,7 @@ export default function Results({ results, queryState, trackClick, history }) {
               onClick={e => {
                 trackClick(getRaw(result, "id"));
                 // setClickedResult(getRaw(result, "name"));
-                history.push("?" + queryString.stringify({ v: getRaw(result, "name") }));
+                history.push("?" + queryString.stringify({ v: result.data['id'] }));
               }}
               dangerouslySetInnerHTML={createMarkup(getSnippet(result, "name"))}
             />

@@ -62,7 +62,7 @@ export default class Search extends Component {
   updateResults = debounce(({ query, page = 1, filters }) => {
     databaseClient.search(query, page, 10).then(
       resultList => {
-        // console.log(resultList);
+        // console.log(resultList.results);
         this.setState({
           pageState: {
             currentPage: resultList.info.meta.page.current,

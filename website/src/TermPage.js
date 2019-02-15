@@ -44,14 +44,14 @@ class TermPage extends Component {
 
   componentWillMount() {
     databaseClient.collection
-      .doc(this.props.term.toLowerCase())
+      .doc(this.props.term)
       .get()
       .then(doc => {
         if (!doc.exists) {
           console.log("No such document!");
         } else {
-          console.log("Document data:", doc.data());
-          console.log("Document name: " + doc.data().name);
+          // console.log("Document data:", doc.data());
+          // console.log("Document name: " + doc.data().name);
 
           this.setState({
             name: doc.data().name,
