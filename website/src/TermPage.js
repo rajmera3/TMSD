@@ -74,7 +74,10 @@ class TermPage extends React.Component {
     return (
       <div>
         <div style={styles.header}>
-          <h1 style={styles.headerText}> {this.state.name} </h1>
+          <h1 style={styles.headerText} class="term-title">
+            {" "}
+            {this.state.name}{" "}
+          </h1>
         </div>
 
         <div style={styles.graph} class="graph">
@@ -85,7 +88,7 @@ class TermPage extends React.Component {
           />
         </div>
 
-        <div style={styles.definition} class="graph">
+        <div style={styles.definition} class="graph term-info">
           <p style={styles.defText}> {this.state.description} }</p>
         </div>
       </div>
