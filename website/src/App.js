@@ -26,7 +26,6 @@ class App extends Component {
       <Search location={location} history={history}>
         {({ query, queryState, queryClass, searchActions, searchResults }) => (
           <div>
-            <div className="site-background" />
             <div className={`search-demo live-filtering ${queryClass}`}>
               <div className="search-demo__content">
                 <div className="search-demo__header">
@@ -81,6 +80,16 @@ class App extends Component {
                 </div>
               </div>
             </div>
+            <div className="site-background" >
+              <div className="emptyDirectorySpace" />
+              <a href="#"
+                onClick={e => {
+                    history.push("?directory");
+                  }
+                }
+              className="directory" > <p> Directory of Terms </p></a>
+            </div>
+            
           </div>
         )}
       </Search>
@@ -93,13 +102,24 @@ class App extends Component {
 
   getComponentToRender = (location, history) => {
     var url = queryString.parse(location.search);
+    var mainComponent;
     if ("v" in url) {
       // visualizations
-      return this.getVisualizationComponent(location, history, url["v"]);
+      console.log("visualizations page");
+      mainComponent = this.getVisualizationComponent(location, history, url["v"]);
+    } else if ("directory" in url) {
+      console.log("directory page");
+      mainComponent = (<Directory history={history}/>);
     } else {
       // search
-      return this.getSearchComponent(location, history);
+      console.log("search page");
+      mainComponent = this.getSearchComponent(location, history);
     }
+    return (
+      <div>
+        {mainComponent}
+      </div>
+      );
   };
 
   render() {

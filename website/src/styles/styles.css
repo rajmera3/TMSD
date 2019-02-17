@@ -385,7 +385,8 @@ a.subtle-link:hover {
 }
 
 .site-background {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -737,4 +738,12 @@ a.subtle-link:hover {
   content: "\AB";
   font-size: 16px;
   line-height: 1.5;
+}
+
+.directory {
+  text-align: center;
+}
+
+.emptyDirectorySpace {
+  flex: 1;
 }

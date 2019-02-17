@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import createDatabaseClient from "./Database";
+import queryString from "query-string";
 
 const databaseClient = createDatabaseClient();
 
@@ -22,11 +23,32 @@ export default class Directory extends Component {
     });
   }
 
+  TermList = () => {
+    const terms = this.state.allTerms;
+    //<p style={{textAlign:"center"}}> {term} </p>
+    const listItems = terms.map(term => (
+      <li>
+        <a
+          href={""}
+          onClick={e => {
+                this.props.history.push("?" + queryString.stringify({ v: term }));
+              }} >
+                {term}
+        </a>
+      </li>
+    ));
+    return <ul>{listItems}</ul>;
+  };
+
   render() {
     // renders every time this.state is updated
     console.log(this.state.allTerms); // see this in browser's console (Right click => Inspect element => Console)
     return (
-      <div>
+      <div className="site-background">
+        <h1 className="search-demo__title" style={{textAlign:"center"}}>
+          Directory of Terms
+        </h1>
+
         <this.TermList />
       </div>
       // stuff here TODO
@@ -34,21 +56,4 @@ export default class Directory extends Component {
       // see https://reactjs.org/docs/lists-and-keys.html
     );
   }
-
-  TermList = () => {
-    const terms = this.state.allTerms;
-    const listItems = terms.map(term => (
-      <li>
-        <a
-          href={"#"}
-          //onClick={e =>
-          //history.push("?" + queryString.stringify({v: term }));
-          //}
-        >
-          {term}
-        </a>
-      </li>
-    ));
-    return <ul>{listItems}</ul>;
-  };
 }

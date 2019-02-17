@@ -32,7 +32,7 @@ export default function Results({ results, queryState, trackClick, history }) {
           <div className="result__header">
             <a
               className="result__title"
-              href={"#"}
+              href={""}
               // target="_blank"
               rel="noopener noreferrer"
               onClick={e => {

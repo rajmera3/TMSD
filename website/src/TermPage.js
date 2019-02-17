@@ -9,33 +9,6 @@ const databaseClient = createDatabaseClient();
 
 ReactChartkick.addAdapter(Chart);
 
-// const dates = [
-//   {
-//     name: "Academia",
-//     data: {
-//       1985: 5,
-//       1990: 300,
-//       1995: 900,
-//       2000: 3000,
-//       2005: 2500,
-//       2010: 1000,
-//       2015: 3
-//     }
-//   },
-//   {
-//     name: "Science Fiction",
-//     data: {
-//       "1985": 3000,
-//       "1990": 700,
-//       "1995": 300,
-//       "2000": 8000,
-//       "2005": 1200,
-//       "2010": 8000,
-//       "2015": 3
-//     }
-//   }
-// ];
-
 class TermPage extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +29,7 @@ class TermPage extends Component {
           this.setState({
             name: doc.data().name,
             dates: doc.data().dates,
+            first_occurance: doc.data().first_occurance,
             description: doc.data().description
           });
         }
@@ -83,8 +57,10 @@ class TermPage extends Component {
         </div>
 
         <div style={styles.definition} class="graph">
-          <p style={styles.headerText}> {this.state.description }</p>
+          <p style={styles.headerText}> Definition: {this.state.description }</p>
+          <p style={styles.headerText}> First Occurance: {this.state.first_occurance }</p>
         </div>
+
       </div>
     );
   }

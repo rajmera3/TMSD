@@ -50,6 +50,18 @@ def searchWord(word):
 	start_date = _getStartDate(soup)
 	return definition, start_date
 
+def useApi(word):
+	BASE_URL = 'https://od-api.oxforddictionaries.com/api/v1'
+	import json
+	app_id = 'e8901f8f'
+	app_key = 'b5b75721b3fa6328753ac38e0ca5ee8a'
+	language = 'en'
+	word_id = 'Ace'
+
+	url = BASE_URL + "/entries/" + language + '/' + word_id.lower()
+	resp = _get(url)
+
+
 # soup = _getWordSoup("intelligence")
 # soup = _getWordSoup("artificial intelligence")
 # if soup: print(soup.title.string)
