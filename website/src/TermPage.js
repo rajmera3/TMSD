@@ -8,33 +8,6 @@ const databaseClient = createDatabaseClient();
 
 ReactChartkick.addAdapter(Chart);
 
-const dates = [
-  {
-    name: "Academia",
-    data: {
-      1985: 5,
-      1990: 300,
-      1995: 900,
-      2000: 3000,
-      2005: 2500,
-      2010: 1000,
-      2015: 3
-    }
-  },
-  {
-    name: "Science Fiction",
-    data: {
-      "1985": 3000,
-      "1990": 700,
-      "1995": 300,
-      "2000": 8000,
-      "2005": 1200,
-      "2010": 8000,
-      "2015": 3
-    }
-  }
-];
-
 class TermPage extends React.Component {
   constructor(props) {
     super(props);
@@ -53,13 +26,14 @@ class TermPage extends React.Component {
         if (!doc.exists) {
           console.log("No such document!");
         } else {
-          console.log("Document data:", doc.data());
-          console.log("Document name: " + doc.data().name);
+          // console.log("Document data:", doc.data());
+          // console.log("Document name: " + doc.data().name);
 
           this.setState({
             name: doc.data().name,
             dates: doc.data().dates,
-            description: doc.data().description
+            description: doc.data().description,
+            first_occurance: doc.data().first_occurance
           });
         }
       })
@@ -67,20 +41,20 @@ class TermPage extends React.Component {
         console.log("Error getting document", err);
       });
 
-    console.log(alien);
+    // console.log(alien);
   }
 
   render() {
     return (
       <div>
         <div style={styles.header}>
-          <h1 style={styles.headerText} class="term-title">
+          <h1 style={styles.headerText} className="term-title">
             {" "}
             {this.state.name}{" "}
           </h1>
         </div>
 
-        <div style={styles.graph} class="graph">
+        <div style={styles.graph} className="graph">
           <LineChart
             height="42vh"
             data={this.state.dates}
@@ -88,8 +62,10 @@ class TermPage extends React.Component {
           />
         </div>
 
-        <div style={styles.definition} class="graph term-info">
-          <p style={styles.defText}> {this.state.description} }</p>
+        <div style={styles.definition} className="graph term-info">
+          <p style={styles.defText}> <strong>Definition:</strong> {this.state.description }</p>
+          <p style={styles.defText}> <strong>First Occurance:</strong> {this.state.first_occurance }</p>
+          <p style={styles.defText}> <strong>Data Sources:</strong> Pubmed for Academia</p>
         </div>
       </div>
     );
@@ -108,15 +84,16 @@ const styles = {
   },
   graph: {
     width: "90vw",
-    height: "50vh",
+    height: "100%",
     margin: "auto",
     marginTop: "40px"
   },
   definition: {
     width: "60vw",
-    height: "20vh",
+    height: "100%",
     margin: "auto",
-    marginTop: "40px"
+    marginTop: "40px",
+    marginBottom: "40px"
   },
   defText: {
     textAlign: "left",

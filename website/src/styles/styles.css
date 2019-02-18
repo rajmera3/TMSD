@@ -386,7 +386,9 @@ a.subtle-link:hover {
 }
 
 .site-background {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  /*display: block;*/
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -763,4 +765,12 @@ a.subtle-link:hover {
   font-family: "Fira Sans", sans-serif;
   font-size: 15px;
   font-weight: 300;
+}
+
+.directory {
+  text-align: center;
+}
+
+.emptyDirectorySpace {
+  flex: 1;
 }

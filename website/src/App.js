@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import TermPage from "./TermPage";
 import MainPage from "./MainPage";
+import Directory from "./Directory";
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={MainPage} />
           <Route path="/v=:id" component={TermPage} />
+          <Route path="/directory" component={Directory} />
         </div>
       </Router>
     );

@@ -34,7 +34,6 @@ class MainPage extends React.Component {
                   searchResults
                 }) => (
                   <div>
-                    <div className="site-background" />
                     <div className={`search-demo live-filtering ${queryClass}`}>
                       <div className="search-demo__content">
                         <div className="search-demo__header">
@@ -90,6 +89,15 @@ class MainPage extends React.Component {
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div className="site-background" >
+                      <div className="emptyDirectorySpace" />
+                      <a href=""
+                        onClick={e => {
+                            history.push("directory");
+                          }
+                        }
+                      className="directory" > <p> Directory of Terms </p></a>
                     </div>
                   </div>
                 )}
