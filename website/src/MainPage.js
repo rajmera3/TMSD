@@ -82,7 +82,7 @@ class MainPage extends React.Component {
                             <div className="search-demo__icon-wrap">
                               <img
                                 src={packageIcon}
-                                alt="Dog Icon"
+                                alt="Dinosaur Icon"
                                 className="search-demo__icon"
                               />
                             </div>
@@ -131,7 +131,6 @@ class MainPage extends React.Component {
                         </div>
                       </div>
                     </div>
-
                     <Popup
                       position="top right"
                       trigger={

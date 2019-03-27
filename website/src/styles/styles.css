@@ -760,12 +760,26 @@ a.subtle-link:hover {
 .modal {
   font-size: 12px;
 }
+
 .modal > .header {
   width: 100%;
   font-weight: bold;
   font-size: 18px;
   text-align: center;
   padding: 5px;
+}
+
+.term-title {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 50px;
+  font-weight: 300;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 .modal > .content {
   width: 100%;
@@ -826,4 +840,47 @@ a.subtle-link:hover {
   margin: 8px 0;
   box-sizing: border-box;
   font-size: 15px;
+}
+
+/* ADMIN PAGE BUTTONS */
+.btn,
+.btn:visited {
+  display: inline-block;
+  padding: 10px 30px;
+  font-weight: 300;
+  text-decoration: none;
+  border-radius: 200px;
+  transition: background-color 0.2s, border 0.2s, color 0.2s;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+.btn:hover,
+.btn:active {
+  cursor: pointer;
+}
+
+.btn-ghost,
+.btn-ghost:visited {
+  border: 1px solid #009933;
+  color: #009933;
+  margin-right: 15px;
+}
+
+.btn-ghost:hover,
+.btn-ghose:active {
+  background-color: #009933;
+  color: #fff;
+}
+
+.btn-full,
+.btn-full:visited {
+  background-color: #ff0000;
+  color: #fff;
+  margin-right: 15px;
+}
+
+.btn-full:hover,
+.btn-full:active {
+  background-color: #cc0000;
 }
