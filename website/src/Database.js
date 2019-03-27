@@ -15,6 +15,10 @@ class DatabaseClient {
     this.collection = firebase.firestore().collection("data");
   }
 
+  changeCollection(newCollection) {
+    this.collection = firebase.firestore().collection(newCollection);
+  }
+
   async getQueryMatches(query) {
     var queryMatches = [];
 
