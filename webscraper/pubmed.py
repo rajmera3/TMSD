@@ -84,7 +84,7 @@ def getWordFrequency(query, include_2019=True):
     return None
 
 # wordFreq = getWordFrequency('artificial intelligence')
-# wordFreq = getWordFrequency('adventure')
+# wordFreq = getWordFrequency('actifan')
 # print(wordFreq)
 # print(wordFreq)
 # url = _getSearchUrl('artificial intelligence', datetime(2009, 1, 1), datetime(2009, 12, 31))

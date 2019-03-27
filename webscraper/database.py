@@ -7,9 +7,12 @@ def getDocs():
     # Then query for documents
     users_ref = db.collection(u'data')
     docs = users_ref.get()
-
     for doc in docs:
-        print(u'{} => {}'.format(doc.id, doc.to_dict()))
+        print(doc)
+        break
+
+    # for doc in docs:
+    #     print(u'{} => {}'.format(doc.id, doc.to_dict()))
 
 def addDoc(name, academia=[], science_fiction=[], description=None, first_occurance=None, related_terms=None):
     def convertData(data):

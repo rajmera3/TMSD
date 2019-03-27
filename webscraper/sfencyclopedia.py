@@ -2,7 +2,7 @@ import requests
 import urllib
 from bs4 import BeautifulSoup
 
-def getThemeWords():
+def getWords():
     themeWords = []
 
     url = 'http://www.sf-encyclopedia.com/category/themes/theme'
