@@ -52,6 +52,7 @@ class TermPage extends React.Component {
             {" "}
             {this.state.name}{" "}
           </h1>
+          <hr />
         </div>
 
         <div style={styles.graph} className="graph">
@@ -63,9 +64,18 @@ class TermPage extends React.Component {
         </div>
 
         <div style={styles.definition} className="graph term-info">
-          <p style={styles.defText}> <strong>Definition:</strong> {this.state.description }</p>
-          <p style={styles.defText}> <strong>First Occurance:</strong> {this.state.first_occurance }</p>
-          <p style={styles.defText}> <strong>Data Sources:</strong> Pubmed for Academia</p>
+          <p style={styles.defText}>
+            {" "}
+            <strong>Definition:</strong> {this.state.description}
+          </p>
+          <p style={styles.defText}>
+            {" "}
+            <strong>First Occurance:</strong> {this.state.first_occurance}
+          </p>
+          <p style={styles.defText}>
+            {" "}
+            <strong>Data Sources:</strong> Pubmed for Academia
+          </p>
         </div>
       </div>
     );

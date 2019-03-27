@@ -41,7 +41,7 @@ class MainPage extends React.Component {
                             <div className="search-demo__icon-wrap">
                               <img
                                 src={packageIcon}
-                                alt="Dog Icon"
+                                alt="Dinosaur Icon"
                                 className="search-demo__icon"
                               />
                             </div>
@@ -90,14 +90,18 @@ class MainPage extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <div className="site-background" >
+                    <div className="site-background">
                       <div className="emptyDirectorySpace" />
-                      <a href=""
+                      <a
+                        href=""
                         onClick={e => {
-                            history.push("directory");
-                          }
-                        }
-                      className="directory" > <p> Directory of Terms </p></a>
+                          history.push("directory");
+                        }}
+                        className="directory"
+                      >
+                        {" "}
+                        <p> Directory of Terms </p>
+                      </a>
                     </div>
                   </div>
                 )}
