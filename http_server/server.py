@@ -5,8 +5,8 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/scraper', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
-def api_runScraper():
+@app.route('/add', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+def api_addTerms():
     if request.method == 'POST':
         terms = ""
 
@@ -26,6 +26,15 @@ def api_runScraper():
         return "Added Terms: " + ', '.join(terms) + "\n"
     else:
         return "Use POST to add new terms thanks! :D\n"
+
+@app.route('/rerun', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
+def api_removeTerms():
+    if request.method == 'POST':
+
+
+        return "Reran the scraper/Db updated! \n"
+    else:
+        return "Use POST to rerun the scraper! :D\n"
     
 
 if __name__ == '__main__':
