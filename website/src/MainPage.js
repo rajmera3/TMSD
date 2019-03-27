@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Popup from "reactjs-popup";
 
 import ScrollToTop from "./ScrollToTop";
 import Pagination from "./Pagination";
@@ -10,18 +11,58 @@ import Totals from "./Totals";
 import packageIcon from "./icons/icon-package.svg";
 import poweredBy from "./images/powered-by@2x.png";
 import TermPage from "./TermPage";
+import createDatabaseClient from "./Database";
+import firebase from "firebase";
+
+const databaseClient = createDatabaseClient("requestedTerms");
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: " " };
+    this.state = { title: " ", isSuccessful: false };
+  }
+
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   }
 
   componentWillMount() {}
 
+  async requestNewTerm() {
+    databaseClient.changeCollection("requestedTerms");
+    // event.preventDefault();
+
+    var newTerm = document.getElementById("requestedTerm").value;
+    newTerm = newTerm.toLowerCase();
+    var termAdded = false;
+    if (newTerm == "") {
+      alert("Please provide a term");
+    } else {
+      await databaseClient.collection
+        .doc(newTerm)
+        .set({})
+        .then(function() {
+          console.log("Document successfully written!");
+          termAdded = true;
+          console.log(termAdded);
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+          termAdded = false;
+        });
+
+      console.log(termAdded);
+      this.setState({
+        isSuccessful: termAdded
+      });
+    }
+  }
+
   render() {
     return (
-      <div>
+      <div align="center">
         <ScrollToTop>
           <Route>
             {({ location, history }) => (
@@ -90,14 +131,70 @@ class MainPage extends React.Component {
                         </div>
                       </div>
                     </div>
-                    <div className="site-background" >
+
+                    <Popup
+                      position="top right"
+                      trigger={
+                        <button type="button" className="buttonRequest">
+                          {" "}
+                          Request New Term{" "}
+                        </button>
+                      }
+                      modal
+                    >
+                      {close => (
+                        <div className="modal" align="center">
+                          <a className="close" onClick={close}>
+                            &times;
+                          </a>
+                          <div className="header"> Enter Term </div>
+                          <form>
+                            <input
+                              id="requestedTerm"
+                              name="requestedTerm"
+                              type="text"
+                              className="inputForm"
+                            />
+                          </form>
+                          <div className="actions">
+                            <button
+                              className="buttonGreen"
+                              type="button"
+                              onClick={() => {
+                                this.requestNewTerm();
+                                close();
+                              }}
+                            >
+                              {" "}
+                              Confirm Request{" "}
+                            </button>
+
+                            <button
+                              type="button"
+                              className="buttonRed"
+                              onClick={() => {
+                                console.log("modal closed ");
+                                close();
+                              }}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </Popup>
+                    <div className="site-background">
                       <div className="emptyDirectorySpace" />
-                      <a href=""
+                      <a
+                        href=""
                         onClick={e => {
-                            history.push("directory");
-                          }
-                        }
-                      className="directory" > <p> Directory of Terms </p></a>
+                          history.push("directory");
+                        }}
+                        className="directory"
+                      >
+                        {" "}
+                        <p> Directory of Terms </p>
+                      </a>
                     </div>
                   </div>
                 )}
@@ -109,5 +206,34 @@ class MainPage extends React.Component {
     );
   }
 }
+
+const styles = {
+  header: {
+    width: "75vw",
+    margin: "auto",
+    marginTop: "20px",
+    textAlign: "center"
+  },
+  headerText: {
+    textAlign: "center"
+  },
+  graph: {
+    width: "90vw",
+    height: "100%",
+    margin: "auto",
+    marginTop: "40px"
+  },
+  definition: {
+    width: "60vw",
+    height: "100%",
+    margin: "auto",
+    marginTop: "40px",
+    marginBottom: "40px"
+  },
+  defText: {
+    textAlign: "left",
+    color: "black"
+  }
+};
 
 export default MainPage;
