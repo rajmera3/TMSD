@@ -1,21 +1,62 @@
 import React from "react";
 import Select from "react-select";
-
+import createDatabaseClient from "./Database";
 /*
 https://jedwatson.github.io/react-select/
 
 https://react-select.com/props
 */
 
-const options = [
+var options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
   { value: "vanilla", label: "Vanilla" }
 ];
 
+const databaseClient = createDatabaseClient();
+
 class AdminPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      options: options
+    };
+  }
+
+  componentWillMount() {
+    databaseClient.changeCollection("requestedTerms");
+    let promiseRequestedTerms = databaseClient.getAllTerms();
+    console.log(promiseRequestedTerms);
+    promiseRequestedTerms.then(listofTerms => {
+      let terms = [];
+      for (let i = 0; i < listofTerms.length; i++) {
+        const newEntry = { value: listofTerms[i], label: listofTerms[i] };
+        terms.push(newEntry);
+      }
+
+      //Options is not being updated here, and no way to force it
+      //options = dict;
+      this.setState({ options: terms });
+
+      console.log(listofTerms);
+      console.log(options);
+    });
+  }
+
+  deleteRequests(termsToDelete) {
+    databaseClient.changeCollection("requestedTerms");
+
+    for (let i = 0; i < termsToDelete.length; i++) {
+      databaseClient.collection
+        .doc(termsToDelete[i])
+        .delete()
+        .then(function() {
+          console.log("Document successfully deleted!");
+        })
+        .catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+    }
   }
 
   state = {
@@ -27,7 +68,6 @@ class AdminPage extends React.Component {
   };
   render() {
     const { selectedOption } = this.state;
-
     return (
       <div>
         <div style={styles.header}>
@@ -43,12 +83,19 @@ class AdminPage extends React.Component {
             <Select
               value={selectedOption}
               onChange={this.handleChange}
-              options={options}
+              options={this.state.options}
               isMulti={true}
               closeMenuOnSelect={false}
             />
             <a className="btn btn-ghost">Add to Database</a>
-            <a className="btn btn-full">Delete Requests</a>
+            <a
+              className="btn btn-full"
+              onClick={() => {
+                this.deleteRequests(["React", "hi"]);
+              }}
+            >
+              Delete Requests
+            </a>
           </div>
           <div className="stats" />
           <div className="actions" />

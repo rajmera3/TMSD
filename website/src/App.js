@@ -19,6 +19,7 @@ class App extends Component {
           <Route exact path="/" component={MainPage} />
           <Route path="/v=:id" component={TermPage} />
           <Route path="/directory" component={Directory} />
+          <Route path="/admin" component={AdminPage} />
         </div>
       </Router>
     );
