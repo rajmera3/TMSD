@@ -83,7 +83,7 @@ def addWord(word, definition=''):
     # if not output[1] or not output[3]: return None
 
     # add to firestore
-    # database.addDoc(word, academiaWordFreq, scienceFictionWordFreq, description=definition, first_occurance=start_date)
+    database.addDoc(word, academiaWordFreq, scienceFictionWordFreq, description=definition, first_occurance=start_date)
 
     return '\n'.join(output)
 
@@ -115,4 +115,4 @@ def addWordsFromTerms():
 # addSfEncyclopediaThemes()
 
 # print(addWord('Artificial Intelligence'))
-# addWord('Machine Learning')
+# addWord('Alien')

@@ -2,9 +2,6 @@ from flask import Flask
 from flask import request
 from flask import json as fjson
 import json
-
-import sys
-sys.path.insert(0, './webscraper')
 import webscraper
 
 app = Flask(__name__)
@@ -23,11 +20,12 @@ def api_addTerms():
             terms_raw = fjson.dumps(request.get_json())
             terms_dict = json.loads(terms_raw)
             
-            terms = [e for e in terms_dict['new-terms']]
+            terms = [t for t in terms_dict['new-terms']]
         
         print(terms)
 
         for t in terms:
+            print("Adding: ", t)
             webscraper.addWord(t)
 
         return "Added Terms: " + ', '.join(terms) + "\n"
