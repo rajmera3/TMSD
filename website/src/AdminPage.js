@@ -18,23 +18,26 @@ const databaseClient = createDatabaseClient();
 class AdminPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      options: options
+    };
   }
 
   componentWillMount() {
     databaseClient.changeCollection("requestedTerms");
     let promiseRequestedTerms = databaseClient.getAllTerms();
-    let listofTerms = [];
     console.log(promiseRequestedTerms);
-    let i = 0;
-    promiseRequestedTerms.then(function(value) {
-      listofTerms = value;
-      let dict = {};
+    promiseRequestedTerms.then(listofTerms => {
+      let terms = [];
       for (let i = 0; i < listofTerms.length; i++) {
-        dict[listofTerms[i]] = listofTerms[i];
+        const newEntry = { value: listofTerms[i], label: listofTerms[i] };
+        terms.push(newEntry);
       }
 
       //Options is not being updated here, and no way to force it
-      options = dict;
+      //options = dict;
+      this.setState({ options: terms });
+
       console.log(listofTerms);
       console.log(options);
     });
@@ -80,7 +83,7 @@ class AdminPage extends React.Component {
             <Select
               value={selectedOption}
               onChange={this.handleChange}
-              options={options}
+              options={this.state.options}
               isMulti={true}
               closeMenuOnSelect={false}
             />
