@@ -38,7 +38,7 @@ def _getDefinition(soup):
 	return definition.text.strip()
 
 def _getStartDate(soup):
-	return soup.find(class_="senseWrap").div.find(class_="quotationDate").text.split("—")[0].replace("a", "Ante ").replace("c", "Circa ")
+	return soup.find(class_="senseWrap").div.find(class_="quotationDate").text.split("-")[0].replace("a", "Ante ").replace("c", "Circa ")
 
 def searchWord(word):
 	word = word.lower()

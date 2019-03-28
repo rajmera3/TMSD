@@ -107,7 +107,7 @@ def addWordsFromTerms():
             continue
         print('Success! Added word: {}'.format(wordDef['word']))
 
-addWordsFromTerms()
+#addWordsFromTerms()
 
 # addWord('Artificial Intelligence')
 # addWord('Magnetism')
