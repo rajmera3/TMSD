@@ -12,9 +12,8 @@ import packageIcon from "./icons/icon-package.svg";
 import poweredBy from "./images/powered-by@2x.png";
 import TermPage from "./TermPage";
 import createDatabaseClient from "./Database";
-import firebase from "firebase";
 
-const databaseClient = createDatabaseClient("requestedTerms");
+const databaseClient = createDatabaseClient();
 
 class MainPage extends React.Component {
   constructor(props) {
