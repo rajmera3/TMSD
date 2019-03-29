@@ -24,6 +24,10 @@ class AdminPage extends React.Component {
   }
 
   componentWillMount() {
+    this.updateOptions();
+  }
+
+  updateOptions = () => {
     databaseClient.changeCollection("requestedTerms");
     let promiseRequestedTerms = databaseClient.getAllTerms();
     console.log(promiseRequestedTerms);
@@ -41,8 +45,7 @@ class AdminPage extends React.Component {
       console.log(listofTerms);
       console.log(options);
     });
-  }
-
+  };
   state = {
     selectedOption: null
   };
@@ -68,8 +71,6 @@ class AdminPage extends React.Component {
           console.error("Error removing document: ", error);
         });
     }
-
-    this.componentWillMount();
   };
   render() {
     const { selectedOption } = this.state;
