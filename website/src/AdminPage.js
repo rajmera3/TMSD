@@ -43,12 +43,23 @@ class AdminPage extends React.Component {
     });
   }
 
-  deleteRequests(termsToDelete) {
+  state = {
+    selectedOption: null
+  };
+  handleChange = selectedOption => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+    console.log(this.state.selectedOption);
+  };
+  deleteRequests = termsToDelete => {
     databaseClient.changeCollection("requestedTerms");
+
+    console.log(this.state);
+    termsToDelete = this.state.selectedOption;
 
     for (let i = 0; i < termsToDelete.length; i++) {
       databaseClient.collection
-        .doc(termsToDelete[i])
+        .doc(termsToDelete[i].value)
         .delete()
         .then(function() {
           console.log("Document successfully deleted!");
@@ -57,14 +68,8 @@ class AdminPage extends React.Component {
           console.error("Error removing document: ", error);
         });
     }
-  }
 
-  state = {
-    selectedOption: null
-  };
-  handleChange = selectedOption => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    this.componentWillMount();
   };
   render() {
     const { selectedOption } = this.state;
@@ -88,12 +93,7 @@ class AdminPage extends React.Component {
               closeMenuOnSelect={false}
             />
             <a className="btn btn-ghost">Add to Database</a>
-            <a
-              className="btn btn-full"
-              onClick={() => {
-                this.deleteRequests(["React", "hi"]);
-              }}
-            >
+            <a className="btn btn-full" onClick={this.deleteRequests}>
               Delete Requests
             </a>
           </div>
