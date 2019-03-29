@@ -62,6 +62,10 @@ class MainPage extends React.Component {
   render() {
     return (
       <div align="center">
+        <a className="button" href="/adminLogin">
+          {" "}
+          Admin Login{" "}
+        </a>
         <ScrollToTop>
           <Route>
             {({ location, history }) => (

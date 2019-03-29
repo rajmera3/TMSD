@@ -1,6 +1,8 @@
 import React from "react";
 import Select from "react-select";
 import createDatabaseClient from "./Database";
+import firebase from "firebase";
+import packageIcon from "./icons/icon-package.svg";
 /*
 https://jedwatson.github.io/react-select/
 
@@ -74,35 +76,63 @@ class AdminPage extends React.Component {
   };
   render() {
     const { selectedOption } = this.state;
-    return (
-      <div>
-        <div style={styles.header}>
-          <h1 style={styles.headerText} className="term-title">
-            Admin Dashboard
-          </h1>
-          <hr />
-        </div>
-        <div className="admin-dashboard">
-          <div className="pending-requests graph" style={styles.requests}>
-            <h3>Pending Requests</h3>
-            <p>Select requested terms to add or delete to the database</p>
-            <Select
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={this.state.options}
-              isMulti={true}
-              closeMenuOnSelect={false}
-            />
-            <a className="btn btn-ghost">Add to Database</a>
-            <a className="btn btn-full" onClick={this.deleteRequests}>
-              Delete Requests
-            </a>
+
+    var user = firebase.auth().currentUser;
+    if (user) {
+      return (
+        <div>
+          <div style={styles.header}>
+            <h1 style={styles.headerText} className="term-title">
+              Admin Dashboard
+            </h1>
+            <hr />
           </div>
-          <div className="stats" />
-          <div className="actions" />
+          <div className="admin-dashboard">
+            <div className="pending-requests graph" style={styles.requests}>
+              <h3>Pending Requests</h3>
+              <p>Select requested terms to add or delete to the database</p>
+              <Select
+                value={selectedOption}
+                onChange={this.handleChange}
+                options={this.state.options}
+                isMulti={true}
+                closeMenuOnSelect={false}
+              />
+              <a className="btn btn-ghost">Add to Database</a>
+              <a className="btn btn-full" onClick={this.deleteRequests}>
+                Delete Requests
+              </a>
+            </div>
+            <div className="stats" />
+            <div className="actions" />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div align="center" style={styles.divStyle}>
+          <div className="search-demo__headings">
+            <div className="search-demo__icon-wrap">
+              <img
+                src={packageIcon}
+                alt="Dinosaur Icon"
+                className="search-demo__icon"
+              />
+            </div>
+            <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+          </div>
+          <p>
+            You are not logged in. Please use the buttons below to redirect.
+          </p>
+          <a className="buttonGreen" href="/">
+            Redirect to TMSD Home
+          </a>
+          <a className="buttonRed" href="/adminLogin">
+            Redirect to TMSD Admin Login
+          </a>
+        </div>
+      );
+    }
   }
 }
 
@@ -132,6 +162,11 @@ const styles = {
   defText: {
     textAlign: "left",
     color: "black"
+  },
+  divStyle: {
+    margin: "auto",
+    marginTop: "10%",
+    height: "100%"
   }
 };
 

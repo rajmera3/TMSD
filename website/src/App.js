@@ -7,7 +7,6 @@ import Directory from "./Directory";
 import AdminPage from "./AdminPage";
 import AdminLogin from "./AdminLogin";
 
-/*
 class App extends Component {
   constructor(props) {
     super(props);
@@ -22,12 +21,12 @@ class App extends Component {
           <Route path="/v=:id" component={TermPage} />
           <Route path="/directory" component={Directory} />
           <Route path="/admin" component={AdminPage} />
+          <Route path="/adminlogin" component={AdminLogin} />
         </div>
       </Router>
     );
   }
 }
-*/
 
 /*
 class App extends Component {
@@ -43,11 +42,5 @@ class App extends Component {
   }
 }
 */
-
-class App extends Component {
-  render() {
-    return <AdminLogin />;
-  }
-}
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import createDatabaseClient from "./Database";
 import queryString from "query-string";
-
+import packageIcon from "./icons/icon-package.svg";
 const databaseClient = createDatabaseClient();
 
 export default class Directory extends Component {
@@ -31,9 +31,10 @@ export default class Directory extends Component {
         <a
           href={""}
           onClick={e => {
-                this.props.history.push("?" + queryString.stringify({ v: term }));
-              }} >
-                {term}
+            this.props.history.push("?" + queryString.stringify({ v: term }));
+          }}
+        >
+          {term}
         </a>
       </li>
     ));
@@ -44,12 +45,28 @@ export default class Directory extends Component {
     // renders every time this.state is updated
     console.log(this.state.allTerms); // see this in browser's console (Right click => Inspect element => Console)
     return (
-      <div className="site-background">
-        <h1 className="search-demo__title" style={{textAlign:"center"}}>
-          Directory of Terms
-        </h1>
+      // <div className="site-background">
+      //   <h1 className="search-demo__title" style={{textAlign:"center"}}>
+      //     Directory of Terms
+      //   </h1>
+      //   <this.TermList />
+      // </div>
 
-        <this.TermList />
+      <div align="center" style={styles.divStyle}>
+        <div className="search-demo__headings">
+          <div className="search-demo__icon-wrap">
+            <img
+              src={packageIcon}
+              alt="Dinosaur Icon"
+              className="search-demo__icon"
+            />
+          </div>
+          <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+          <h4 className="search-demo__title" style={{ textAlign: "center" }}>
+            Directory of Terms
+          </h4>
+          <this.TermList />
+        </div>
       </div>
       // stuff here TODO
       // render this.state.allTerms in a list
@@ -57,3 +74,32 @@ export default class Directory extends Component {
     );
   }
 }
+
+const styles = {
+  header: {
+    width: "75vw",
+    margin: "auto",
+    marginTop: "20px",
+    textAlign: "center"
+  },
+  headerText: {
+    textAlign: "center"
+  },
+  graph: {
+    width: "90vw",
+    height: "100%",
+    margin: "auto",
+    marginTop: "40px"
+  },
+  definition: {
+    width: "60vw",
+    height: "100%",
+    margin: "auto",
+    marginTop: "40px",
+    marginBottom: "40px"
+  },
+  defText: {
+    textAlign: "left",
+    color: "black"
+  }
+};
