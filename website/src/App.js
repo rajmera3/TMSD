@@ -5,7 +5,9 @@ import TermPage from "./TermPage";
 import MainPage from "./MainPage";
 import Directory from "./Directory";
 import AdminPage from "./AdminPage";
+import AdminLogin from "./AdminLogin";
 
+/*
 class App extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +27,7 @@ class App extends Component {
     );
   }
 }
+*/
 
 /*
 class App extends Component {
@@ -40,5 +43,11 @@ class App extends Component {
   }
 }
 */
+
+class App extends Component {
+  render() {
+    return <AdminLogin />;
+  }
+}
 
 export default App;
