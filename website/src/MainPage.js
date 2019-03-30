@@ -62,7 +62,11 @@ class MainPage extends React.Component {
   render() {
     return (
       <div>
-        <a className="button" href="/adminLogin" style={styles.adminButton}>
+        <a
+          className="btn btn-ghostLogin"
+          href="/adminLogin"
+          style={styles.adminButton}
+        >
           {" "}
           Admin Login{" "}
         </a>
@@ -140,7 +144,7 @@ class MainPage extends React.Component {
                       <Popup
                         position="top right"
                         trigger={
-                          <button type="button" className="buttonRequest">
+                          <button type="button" className="btn btn-ghostLogin">
                             {" "}
                             Request New Term{" "}
                           </button>
@@ -163,7 +167,7 @@ class MainPage extends React.Component {
                             </form>
                             <div className="actions">
                               <button
-                                className="buttonGreen"
+                                className="btn btn-ghost"
                                 type="button"
                                 onClick={() => {
                                   this.requestNewTerm();
@@ -176,7 +180,7 @@ class MainPage extends React.Component {
 
                               <button
                                 type="button"
-                                className="buttonRed"
+                                className="btn btn-full"
                                 onClick={() => {
                                   console.log("modal closed ");
                                   close();
