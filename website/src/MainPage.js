@@ -79,7 +79,9 @@ class MainPage extends React.Component {
                     searchResults
                   }) => (
                     <div>
-                      <div className={`search-demo live-filtering ${queryClass}`}>
+                      <div
+                        className={`search-demo live-filtering ${queryClass}`}
+                      >
                         <div className="search-demo__content">
                           <div className="search-demo__header">
                             <div className="search-demo__headings">
@@ -187,7 +189,7 @@ class MainPage extends React.Component {
                         )}
                       </Popup>
                       <div className="site-background">
-                        <div className="emptyDirectorySpace" />
+                        <div />
                         <a
                           href=""
                           onClick={e => {
