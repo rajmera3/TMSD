@@ -63,7 +63,7 @@ class TermPage extends React.Component {
           />
         </div>
 
-        <div style={styles.definition} className="graph term-info">
+        <div style={styles.definition} className="graph">
           <p style={styles.defText}>
             {" "}
             <strong>Definition:</strong> {this.state.description}
@@ -86,7 +86,7 @@ const styles = {
   header: {
     width: "75vw",
     margin: "auto",
-    marginTop: "20px",
+    marginTop: "2%",
     textAlign: "center"
   },
   headerText: {

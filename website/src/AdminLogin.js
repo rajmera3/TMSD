@@ -35,7 +35,7 @@ class AdminLogin extends React.Component {
   };
 
   // Listen to the Firebase Auth state and set the local state.
-  componentDidMount() {
+  componentWillMount() {
     this.unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged(user => this.setState({ isSignedIn: !!user }));
@@ -67,57 +67,26 @@ class AdminLogin extends React.Component {
           />
         </div>
       );
+    } else {
+      window.location.href = "/admin";
+      return (
+        <div align="center" style={styles.divStyle}>
+          <div className="search-demo__headings">
+            <div className="search-demo__icon-wrap">
+              <img
+                src={packageIcon}
+                alt="Dinosaur Icon"
+                className="search-demo__icon"
+              />
+            </div>
+            <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+          </div>
+          <p>Sign in successful! Redirecting...</p>
+        </div>
+      );
     }
-    return (
-      <div>
-        <h1>Admin Login</h1>
-        <p>Please sign-in:</p>
-        <StyledFirebaseAuth
-          uiConfig={this.uiConfig}
-          firebaseAuth={firebase.auth()}
-        />
-      </div>
-    );
   }
 }
-
-// import React from 'react';
-// import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-// import firebase from 'firebase';
-
-// // Configure Firebase.
-// // const config = {
-// //   apiKey: 'AIzaSyAeue-AsYu76MMQlTOM-KlbYBlusW9c1FM',
-// //   authDomain: 'myproject-1234.firebaseapp.com',
-// //   // ...
-// // };
-// // firebase.initializeApp(config);
-
-// // Configure FirebaseUI.
-// const uiConfig = {
-//   // Popup signin flow rather than redirect flow.
-//   signInFlow: 'popup',
-//   // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-//   signInSuccessUrl: '/admin',
-//   // We will display Google and Facebook as auth providers.
-//   signInOptions: [
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     firebase.auth.EmailAuthProvider.PROVIDER_ID,
-//     firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
-//   ]
-// };
-
-// class AdminLogin extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <h1>Admin Login</h1>
-//         <p>Please sign-in:</p>
-//         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-//       </div>
-//     );
-//   }
-// // }
 
 const styles = {
   header: {

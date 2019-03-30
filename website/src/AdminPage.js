@@ -21,13 +21,48 @@ class AdminPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      options: options
+      options: options,
+      isLoggedIn: false
     };
   }
 
   componentWillMount() {
     this.updateOptions();
+
+    firebase.auth().onAuthStateChanged(
+      function(user) {
+        if (user) {
+          this.setState({
+            isLoggedIn: true
+          });
+        }
+      }.bind(this)
+    );
+
+    console.log("First check " + this.state.user);
   }
+
+  checkLoginStatus() {
+    return new Promise((resolve, reject) => {
+      const check = firebase.auth().onAuthStateChanged(function(user) {
+        resolve(user);
+      }, reject("api failed"));
+    });
+  }
+
+  isUserLoggedIn = async () => {
+    try {
+      let user = await this.checkLoginStatus();
+      console.log("try | react side: ", user);
+      if (user) {
+        this.setState({
+          user: user
+        });
+      }
+    } catch (err) {
+      console.log("catch | error: ", err);
+    }
+  };
 
   updateOptions = () => {
     databaseClient.changeCollection("requestedTerms");
@@ -74,11 +109,12 @@ class AdminPage extends React.Component {
         });
     }
   };
+
   render() {
     const { selectedOption } = this.state;
-
-    var user = firebase.auth().currentUser;
-    if (user) {
+    //var user = firebase.auth().currentUser;
+    console.log("User " + this.state.user);
+    if (this.state.isLoggedIn) {
       return (
         <div>
           <div style={styles.header}>
@@ -124,10 +160,10 @@ class AdminPage extends React.Component {
           <p>
             You are not logged in. Please use the buttons below to redirect.
           </p>
-          <a className="buttonGreen" href="/">
+          <a className="btn btn-ghost" href="/">
             Redirect to TMSD Home
           </a>
-          <a className="buttonRed" href="/adminLogin">
+          <a className="btn btn-ghost" href="/adminLogin">
             Redirect to TMSD Admin Login
           </a>
         </div>
