@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 import TermPage from "./TermPage";
 import MainPage from "./MainPage";
@@ -15,7 +15,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter basename="/TMSD">
         <div>
           <Route exact path="/" component={MainPage} />
           <Route path="/v=:id" component={TermPage} />
@@ -23,7 +23,7 @@ class App extends Component {
           <Route path="/admin" component={AdminPage} />
           <Route path="/adminlogin" component={AdminLogin} />
         </div>
-      </Router>
+      </BrowserRouter>
     );
   }
 }

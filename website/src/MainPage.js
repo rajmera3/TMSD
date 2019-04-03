@@ -62,7 +62,7 @@ class MainPage extends Component {
       <div>
         <a
           className="btn btn-ghostLogin"
-          href="/adminLogin"
+          href="/TMSD/adminLogin"
           style={styles.adminButton}
         >
           {" "}

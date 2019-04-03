@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "private": true,
-  "homepage": "https://rajmera3.github.io/TMSD",
+  "homepage": "https://rajmera3.github.io/TMSD/",
   "dependencies": {
     "eslint": "5.6.0",
     "chart.js": "^2.7.3",

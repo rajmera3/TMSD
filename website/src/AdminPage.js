@@ -125,7 +125,7 @@ class AdminPage extends React.Component {
         <div>
           <a
             className="btn btn-ghostLogin"
-            href="/"
+            href="/TMSD"
             style={styles.adminButton}
             onClick={this.logout}
           >
@@ -176,10 +176,10 @@ class AdminPage extends React.Component {
           <p>
             You are not logged in. Please use the buttons below to redirect.
           </p>
-          <a className="btn btn-ghost" href="/">
+          <a className="btn btn-ghost" href="/TMSD">
             Redirect to TMSD Home
           </a>
-          <a className="btn btn-ghost" href="/adminLogin">
+          <a className="btn btn-ghost" href="/TMSD/adminLogin">
             Redirect to TMSD Admin Login
           </a>
         </div>
