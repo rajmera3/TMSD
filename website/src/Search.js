@@ -80,11 +80,6 @@ export default class Search extends Component {
     );
   }, 200);
 
-  // trackClick = ({ query, documentId, requestId }) => {
-  //   client.click({ query, documentId, requestId });
-  //   // We'll return undefined here. We don't necessarily want calling code to wait for a response.
-  // };
-
   // This is so that we don't have to pass `requestId` and `query` deep down
   // the tree.
   curriedTrackClick = (query, requestId) => documentId => {

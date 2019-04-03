@@ -2,13 +2,6 @@ import React from "react";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase";
 import packageIcon from "./icons/icon-package.svg";
-// Configure Firebase.
-// const config = {
-//   apiKey: 'AIzaSyAeue-AsYu76MMQlTOM-KlbYBlusW9c1FM',
-//   authDomain: 'myproject-1234.firebaseapp.com',
-//   // ...
-// };
-// firebase.initializeApp(config);
 
 class AdminLogin extends React.Component {
   // The component's Local state.
@@ -28,6 +21,7 @@ class AdminLogin extends React.Component {
     ],
 
     signInSuccessUrl: "/admin",
+
     callbacks: {
       // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: () => true
@@ -50,15 +44,15 @@ class AdminLogin extends React.Component {
     if (!this.state.isSignedIn) {
       return (
         <div align="center" style={styles.divStyle}>
-          <div className="search-demo__headings">
-            <div className="search-demo__icon-wrap">
+          <div className="tmsd__headings">
+            <div className="tmsd__icon-wrap">
               <img
                 src={packageIcon}
                 alt="Dinosaur Icon"
-                className="search-demo__icon"
+                className="tmsd__icon"
               />
             </div>
-            <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+            <h1 className="tmsd__title">Time Machine Space Dinosaur</h1>
           </div>
           <p>Please sign-in:</p>
           <StyledFirebaseAuth
@@ -71,15 +65,15 @@ class AdminLogin extends React.Component {
       window.location.href = "/admin";
       return (
         <div align="center" style={styles.divStyle}>
-          <div className="search-demo__headings">
-            <div className="search-demo__icon-wrap">
+          <div className="tmsd__headings">
+            <div className="tmsd__icon-wrap">
               <img
                 src={packageIcon}
                 alt="Dinosaur Icon"
-                className="search-demo__icon"
+                className="tmsd__icon"
               />
             </div>
-            <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+            <h1 className="tmsd__title">Time Machine Space Dinosaur</h1>
           </div>
           <p>Sign in successful! Redirecting...</p>
         </div>

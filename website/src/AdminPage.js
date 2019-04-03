@@ -9,11 +9,7 @@ https://jedwatson.github.io/react-select/
 https://react-select.com/props
 */
 
-var options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
-];
+var options = [];
 
 const databaseClient = createDatabaseClient();
 
@@ -83,32 +79,42 @@ class AdminPage extends React.Component {
       console.log(options);
     });
   };
-  state = {
-    selectedOption: null
-  };
+
   handleChange = selectedOption => {
     this.setState({ selectedOption });
     console.log(`Option selected:`, selectedOption);
     console.log(this.state.selectedOption);
   };
+
   deleteRequests = termsToDelete => {
     databaseClient.changeCollection("requestedTerms");
 
     console.log(this.state);
     termsToDelete = this.state.selectedOption;
 
-    for (let i = 0; i < termsToDelete.length; i++) {
-      databaseClient.collection
-        .doc(termsToDelete[i].value)
-        .delete()
-        .then(function() {
-          console.log("Document successfully deleted!");
-        })
-        .catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
+    if (termsToDelete) {
+      for (let i = 0; i < termsToDelete.length; i++) {
+        databaseClient.collection
+          .doc(termsToDelete[i].value)
+          .delete()
+          .then(function() {
+            console.log("Document successfully deleted!");
+          })
+          .catch(function(error) {
+            console.error("Error removing document: ", error);
+          });
+      }
+
+      this.updateOptions();
+      this.setState({
+        selectedOption: null
+      });
     }
   };
+
+  logout() {
+    firebase.auth().signOut();
+  }
 
   render() {
     const { selectedOption } = this.state;
@@ -117,6 +123,15 @@ class AdminPage extends React.Component {
     if (this.state.isLoggedIn) {
       return (
         <div>
+          <a
+            className="btn btn-ghostLogin"
+            href="/"
+            style={styles.adminButton}
+            onClick={this.logout}
+          >
+            {" "}
+            Logout{" "}
+          </a>
           <div style={styles.header}>
             <h1 style={styles.headerText} className="term-title">
               Admin Dashboard
@@ -128,15 +143,16 @@ class AdminPage extends React.Component {
               <h3>Pending Requests</h3>
               <p>Select requested terms to add or delete to the database</p>
               <Select
-                value={selectedOption}
+                value={this.state.selectedOption}
                 onChange={this.handleChange}
                 options={this.state.options}
                 isMulti={true}
                 closeMenuOnSelect={false}
               />
-              <a className="btn btn-ghost">Add to Database</a>
+              <a className="btn btn-ghost"> Add to Database </a>
               <a className="btn btn-full" onClick={this.deleteRequests}>
-                Delete Requests
+                {" "}
+                Delete Requests{" "}
               </a>
             </div>
             <div className="stats" />
@@ -147,15 +163,15 @@ class AdminPage extends React.Component {
     } else {
       return (
         <div align="center" style={styles.divStyle}>
-          <div className="search-demo__headings">
-            <div className="search-demo__icon-wrap">
+          <div className="tmsd__headings">
+            <div className="tmsd__icon-wrap">
               <img
                 src={packageIcon}
                 alt="Dinosaur Icon"
-                className="search-demo__icon"
+                className="tmsd__icon"
               />
             </div>
-            <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
+            <h1 className="tmsd__title">Time Machine Space Dinosaur</h1>
           </div>
           <p>
             You are not logged in. Please use the buttons below to redirect.
@@ -203,6 +219,11 @@ const styles = {
     margin: "auto",
     marginTop: "10%",
     height: "100%"
+  },
+  adminButton: {
+    float: "right",
+    margin: "10px",
+    marginTop: "-20px"
   }
 };
 

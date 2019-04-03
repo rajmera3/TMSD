@@ -9,13 +9,11 @@ import Search from "./Search";
 import Totals from "./Totals";
 
 import packageIcon from "./icons/icon-package.svg";
-import poweredBy from "./images/powered-by@2x.png";
-import TermPage from "./TermPage";
 import createDatabaseClient from "./Database";
 
 const databaseClient = createDatabaseClient();
 
-class MainPage extends React.Component {
+class MainPage extends Component {
   constructor(props) {
     super(props);
     this.state = { title: " ", isSuccessful: false };
@@ -83,26 +81,24 @@ class MainPage extends React.Component {
                     searchResults
                   }) => (
                     <div>
-                      <div
-                        className={`search-demo live-filtering ${queryClass}`}
-                      >
-                        <div className="search-demo__content">
-                          <div className="search-demo__header">
-                            <div className="search-demo__headings">
-                              <div className="search-demo__icon-wrap">
+                      <div className={`tmsd live-filtering ${queryClass}`}>
+                        <div className="tmsd__content">
+                          <div className="tmsd__header">
+                            <div className="tmsd__headings">
+                              <div className="tmsd__icon-wrap">
                                 <img
                                   src={packageIcon}
                                   alt="Dinosaur Icon"
-                                  className="search-demo__icon"
+                                  className="tmsd__icon"
                                 />
                               </div>
-                              <h1 className="search-demo__title">
+                              <h1 className="tmsd__title">
                                 Time Machine Space Dinosaur
                               </h1>
                             </div>
-                            <div className="search-demo__input-wrapper">
+                            <div className="tmsd__input-wrapper">
                               <input
-                                className="search-demo__text-input"
+                                className="tmsd__text-input"
                                 placeholder="Search science fiction term or author&#8230;"
                                 value={query}
                                 onChange={e =>
@@ -112,12 +108,12 @@ class MainPage extends React.Component {
                               <input
                                 type="submit"
                                 value="Search"
-                                className="button search-demo__submit"
+                                className="button tmsd__submit"
                               />
                             </div>
                           </div>
 
-                          <div className="search-demo__body">
+                          <div className="tmsd__body">
                             <div className="search-results">
                               <div className="results">
                                 <div className="results__header">
@@ -177,7 +173,6 @@ class MainPage extends React.Component {
                                 {" "}
                                 Confirm Request{" "}
                               </button>
-
                               <button
                                 type="button"
                                 className="btn btn-full"

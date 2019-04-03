@@ -6,4 +6,4 @@ import registerServiceWorker from "./registerServiceWorker";
 import "./styles/tmsdStyles.css";
 
 ReactDOM.render(<App />, document.getElementById("app-container"));
-registerServiceWorker();
+//registerServiceWorker();

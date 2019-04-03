@@ -46,23 +46,19 @@ export default class Directory extends Component {
     console.log(this.state.allTerms); // see this in browser's console (Right click => Inspect element => Console)
     return (
       // <div className="site-background">
-      //   <h1 className="search-demo__title" style={{textAlign:"center"}}>
+      //   <h1 className="tmsd__title" style={{textAlign:"center"}}>
       //     Directory of Terms
       //   </h1>
       //   <this.TermList />
       // </div>
 
       <div align="center" style={styles.divStyle}>
-        <div className="search-demo__headings">
-          <div className="search-demo__icon-wrap">
-            <img
-              src={packageIcon}
-              alt="Dinosaur Icon"
-              className="search-demo__icon"
-            />
+        <div className="tmsd__headings">
+          <div className="tmsd__icon-wrap">
+            <img src={packageIcon} alt="Dinosaur Icon" className="tmsd__icon" />
           </div>
-          <h1 className="search-demo__title">Time Machine Space Dinosaur</h1>
-          <h4 className="search-demo__title" style={{ textAlign: "center" }}>
+          <h1 className="tmsd__title">Time Machine Space Dinosaur</h1>
+          <h4 className="tmsd__title" style={{ textAlign: "center" }}>
             Directory of Terms
           </h4>
           <this.TermList />
