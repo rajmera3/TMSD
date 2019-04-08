@@ -33,7 +33,7 @@ export default function Results({ results, queryState, trackClick }) {
             <a
               className="result__title"
               href={
-                "/TMSD/v=" +
+                "/TMSD/#/v=" +
                 JSON.stringify(getRaw(result, "name").toLowerCase())
               }
               rel="noopener noreferrer"
