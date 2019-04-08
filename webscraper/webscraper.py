@@ -1,10 +1,8 @@
-import oed2 as dictionary
-# import sfencyclopedia as terms_source
+import oed as dictionary
 import brave_new_words as terms_source
-import pubmed2 as academia
+import pubmed as academia
 import google_ngram as science_fiction
 import database
-# import web_of_science as academia
 from utils import is_debug
 
 
@@ -28,15 +26,10 @@ def preprocessWordFreq(academiaWordFreq, scienceFictionWordFreq):
     academiaWordFreq.sort(key = lambda x: x[0])
     scienceFictionWordFreq.sort(key = lambda x: x[0])
 
-def graph(wordFreq):
-    import matplotlib.pyplot as plt
-
-    X = [x[0] for x in wordFreq]
-    Y = [x[1] for x in wordFreq]
-    plt.plot(X, Y)
-    plt.show()
-
 def addWord(word, definition='', percentages=False, start_date=''):
+    if '/' in word:
+        if is_debug(): print("Query cannot contain '/': {}".format(word))
+        return None
     try:
         dictionaryResult = dictionary.searchWord(word)
         if dictionaryResult:
@@ -84,9 +77,15 @@ def addWordsFromTermsLoaded(filename='brave_new_words_output.txt', percentages=F
 
     with open(filename, 'r') as f:
         lines = [line.strip() for line in f.readlines()]
+        start=False
         for i in range(0, len(lines) // 2):
             word = lines[2*i]
             definition = lines[2*i+1]
+            if not start and word == 'K/S':
+                start=True
+            elif not start:
+                continue
+            print(word)
             output = addWord(word, definition=definition, percentages=percentages)
             if not output:
                 print('Error while adding word {}'.format(word))

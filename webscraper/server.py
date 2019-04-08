@@ -35,7 +35,7 @@ def api_addTerms():
 @app.route('/rerun', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def api_removeTerms():
     if request.method == 'POST':
-        webscraper.addWordsFromTerms()
+        webscraper.addWordsFromTermsLoaded()
 
         return "Reran the scraper/Db updated! \n"
     else:

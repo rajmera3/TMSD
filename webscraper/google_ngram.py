@@ -1,4 +1,3 @@
-import requests
 from utils import is_debug, get
 
 def get_frequency(query, filter_one_percent=True, percentages=False):
@@ -70,7 +69,9 @@ def retrieve_absolute_percentage_counts(token, corpus, smoothing, start_year, en
              '&corpus={}&smoothing={}'.format(token, start_year, end_year, corpus_id, smoothing)
 
     # Load the data from the page.
-    page = get(url).text
+    page = get(url)
+    if page is None: return None
+    page = page.text
 
     # Find the places in the html where the data starts and ends
     start = page.find('var data = ')

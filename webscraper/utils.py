@@ -9,19 +9,20 @@ debug = False
 def is_debug():
 	return debug
 
-def get(url, retries=10):
+def get(url, retries=10, timedelta=1, **kwargs):
 	if url:
-		resp = requests.get(url)
+		resp = requests.get(url, **kwargs)
 
 		num_retries = 0
 		while resp.status_code != 200 and num_retries < retries:
-			time.sleep(1)
+			time.sleep(timedelta)
 			resp = requests.get(url)
 			num_retries += 1
 
 		if resp.status_code == 200:
 			return resp
-			# print("Error while getting '{}': Status Code {}".format(url, resp.status_code))
+
+		if is_debug(): print("Error while getting '{}': Status Code {}".format(url, resp.status_code))
 	return None
 
 def getSoup(url):
