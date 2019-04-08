@@ -28,14 +28,7 @@ export default class Directory extends Component {
     //<p style={{textAlign:"center"}}> {term} </p>
     const listItems = terms.map(term => (
       <li>
-        <a
-          href={""}
-          onClick={e => {
-            this.props.history.push("?" + queryString.stringify({ v: term }));
-          }}
-        >
-          {term}
-        </a>
+        <a href={"/TMSD/#/" + 'v="' + term + '"'}>{term}</a>
       </li>
     ));
     return <ul>{listItems}</ul>;

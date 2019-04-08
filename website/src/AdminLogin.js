@@ -20,7 +20,7 @@ class AdminLogin extends React.Component {
       firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
     ],
 
-    signInSuccessUrl: "/TMSD/admin",
+    signInSuccessUrl: "/TMSD/#/admin",
 
     callbacks: {
       // Avoid redirects after sign-in.
@@ -62,7 +62,7 @@ class AdminLogin extends React.Component {
         </div>
       );
     } else {
-      window.location.href = "/TMSD/admin";
+      window.location.href = "/TMSD/#/admin";
       return (
         <div align="center" style={styles.divStyle}>
           <div className="tmsd__headings">

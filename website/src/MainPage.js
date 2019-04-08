@@ -62,7 +62,7 @@ class MainPage extends Component {
       <div>
         <a
           className="btn btn-ghostLogin"
-          href="/TMSD/adminLogin"
+          href="/TMSD/#/adminLogin"
           style={styles.adminButton}
         >
           {" "}
@@ -189,13 +189,7 @@ class MainPage extends Component {
                       </Popup>
                       <div className="site-background">
                         <div />
-                        <a
-                          href=""
-                          onClick={e => {
-                            history.push("directory");
-                          }}
-                          className="directory"
-                        >
+                        <a href="/TMSD/#/directory" className="directory">
                           {" "}
                           <p> Directory of Terms </p>
                         </a>
