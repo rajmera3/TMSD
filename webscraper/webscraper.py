@@ -108,7 +108,7 @@ def addWordsFromTermsLive(percentages=False):
         print('Success! Added word: {}'.format(wordDef['word']))
         print()
 
-addWordsFromTermsLoaded()
+# addWordsFromTermsLoaded()
 
 # addWord('Artificial Intelligence')
 # addWord('Magnetism')
