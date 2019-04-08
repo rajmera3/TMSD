@@ -45,6 +45,7 @@ class TermPage extends React.Component {
   }
 
   render() {
+    console.log(this.state.dates)
     return (
       <div>
         <div style={styles.header}>

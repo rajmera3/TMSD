@@ -18,7 +18,7 @@ def addDoc(name, academia=[], science_fiction=[], description=None, first_occura
     def convertData(data):
         converted = {}
         for year,freq in data:
-            converted[str(year)] = int(freq)
+            converted[str(year)] = float(freq)
         return converted
 
     def createRelatedTerms(query):

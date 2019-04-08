@@ -1,10 +1,11 @@
-import oed
+import oed2 as dictionary
 # import sfencyclopedia as terms_source
 import brave_new_words as terms_source
-import pubmed as academia
+import pubmed2 as academia
 import google_ngram as science_fiction
 import database
 # import web_of_science as academia
+from utils import is_debug
 
 
 # fill in missing dates between academia and sf with 0's
@@ -35,57 +36,38 @@ def graph(wordFreq):
     plt.plot(X, Y)
     plt.show()
 
-def addWord(word, definition=''):
-    output = []
-    # print(word)
-    output.append(word)
+def addWord(word, definition='', percentages=False, start_date=''):
     try:
-        oedResult = oed.searchWord(word)
-        if oedResult:
-            oxford_definition, start_date = oedResult
-            if not definition: definition = oxford_definition
-            # print(definition)
-            output.append(definition)
-            # print(start_date)
-            output.append(start_date)
+        dictionaryResult = dictionary.searchWord(word)
+        if dictionaryResult:
+            dictionary_definition, start_date = dictionaryResult
+            if not definition: definition = dictionary_definition
         else:
-            print("Could not get OED word: " + word)
-            # definition = None
-            # start_date = None
-            # output.append('')
-            # output.append('')
-            # return None
-            start_date = ''
-
+            if is_debug(): print("Could not get dictionary word: " + word)
     except Exception as e:
-        print("Cannot connect to OED. Please make sure you are connected to Georgia Tech's wifi")
-        definition = None
-        start_date = None
-        if len(output) == 1:
-            output.append('')
-            output.append('')
-        return None
+        if is_debug(): print("Cannot connect to dictionary. Error message: {}".format(e))
 
-    academiaWordFreq = academia.getWordFrequency(word, include_2019=False)
+    academiaWordFreq = academia.get_frequency(word, filter_one_percent=True, percentages=percentages)
     if not academiaWordFreq:
         return None
 
-    scienceFictionWordFreq = science_fiction.getWordFrequency(word, include_2019=False)
+    scienceFictionWordFreq = science_fiction.get_frequency(word, filter_one_percent=True, percentages=percentages)
     if not scienceFictionWordFreq:
         return None
 
     # fill in missing dates between academia and sf with 0's
     preprocessWordFreq(academiaWordFreq, scienceFictionWordFreq)
 
-    output.append(str(academiaWordFreq))
-    output.append(str(scienceFictionWordFreq))
-
-    # if not output[1] or not output[3]: return None
-
     # add to firestore
     database.addDoc(word, academiaWordFreq, scienceFictionWordFreq, description=definition, first_occurance=start_date)
 
-    return '\n'.join(output)
+    return {
+        "word": word,
+        "definition": definition,
+        "start date": start_date,
+        "academia": academiaWordFreq,
+        "science fiction": scienceFictionWordFreq,
+    }
 
 # def addSfEncyclopediaThemes():
 #     with open('sfEncyclopediaAcademia.txt', 'w') as f:
@@ -97,22 +79,42 @@ def addWord(word, definition=''):
 #             print('Success! Added word: {}'.format(word))
 #             f.write(output + '\n')
 
-def addWordsFromTerms():
-    # termsDefs = terms_source.getWords()
+def addWordsFromTermsLoaded(filename='brave_new_words_output.txt', percentages=False):
+    # add words from saved text of brave new words
+
+    with open(filename, 'r') as f:
+        lines = [line.strip() for line in f.readlines()]
+        for i in range(0, len(lines) // 2):
+            word = lines[2*i]
+            definition = lines[2*i+1]
+            output = addWord(word, definition=definition, percentages=percentages)
+            if not output:
+                print('Error while adding word {}'.format(word))
+                print()
+                continue
+            print('Success! Added word: {}'.format(word))
+            print()
+
+def addWordsFromTermsLive(percentages=False):
+    # THIS NEEDS A GEORGIA TECH WIFI TO ACCESS THE OXFORDREFERENCE
+    # add words from a live version of brave new words
+
     termsDefs = terms_source.getWordsAndDefinition() # generator
     for wordDef in termsDefs:
-        output = addWord(wordDef['word'], definition=wordDef['definition'])
+        output = addWord(wordDef['word'], definition=wordDef['definition'], percentages=percentages)
         if not output:
             print('Error while adding word {}'.format(wordDef['word']))
+            print()
             continue
         print('Success! Added word: {}'.format(wordDef['word']))
+        print()
 
-#addWordsFromTerms()
+addWordsFromTermsLoaded()
 
 # addWord('Artificial Intelligence')
 # addWord('Magnetism')
 # addWord('Time travel')
 # addSfEncyclopediaThemes()
 
-# print(addWord('Artificial Intelligence'))
+# print(addWord('alien'))
 # addWord('Alien')

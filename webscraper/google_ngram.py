@@ -1,28 +1,41 @@
 import requests
-import csv
+from utils import is_debug, get
 
-def getWordFrequency(query, include_2019=True):
+def get_frequency(query, filter_one_percent=True, percentages=False):
     start_date = 1800
-    end_date = 2019 if include_2019 else 2018
-    counts = retrieve_absolute_counts(query, "english fiction", 0, start_date, end_date)
-    if not counts:
-        print("Error: Could not get word frequency from Google NGram")
+    end_date = 2019
+    result = retrieve_absolute_percentage_counts(query, "english fiction", 0, start_date, end_date)
+    if result is None:
+        if is_debug(): print("Error: Could not get word frequency from Google NGram")
         return None
-    freq = list(zip(range(start_date, end_date), counts))
-    
+    counts, counts_percentages = result
+    freq = list(zip(range(start_date, end_date), counts_percentages if percentages else counts))
+
     # delete the beginning dates that start with 0 frequency
     start_from = 0
-    while freq[start_from][1] == 0:
+    while counts[start_from] == 0:
         start_from += 1
+    counts = counts[start_from:]
+    freq = freq[start_from:]
 
-    return freq[start_from:]
+    # start with first date that has at least 1% of max count
+    if filter_one_percent:
+        max_result = max(counts)
+        i = 0
+        while counts[i] < 0.01 * max_result:
+            i += 1
+        freq = freq[i:]
+        counts = counts[i:]
+
+    assert(len(freq) == len(counts))
+    return freq
 
 def getTotal(include_2019=True):
     year = 2019 if include_2019 else 2018
     return _load_total_counts("english fiction", year, year)[0]
 
 # taken from http://stanford.edu/~risi/tutorials/absolute_ngram_counts.html
-def retrieve_absolute_counts(token, corpus, smoothing, start_year, end_year):
+def retrieve_absolute_percentage_counts(token, corpus, smoothing, start_year, end_year):
     '''
     This function retrieves the absolute counts for a given token. 
     It first loads the relative frequencies from the ngram viewer and the absolute counts
@@ -57,7 +70,7 @@ def retrieve_absolute_counts(token, corpus, smoothing, start_year, end_year):
              '&corpus={}&smoothing={}'.format(token, start_year, end_year, corpus_id, smoothing)
 
     # Load the data from the page.
-    page = _get(url).text
+    page = get(url).text
 
     # Find the places in the html where the data starts and ends
     start = page.find('var data = ')
@@ -76,15 +89,7 @@ def retrieve_absolute_counts(token, corpus, smoothing, start_year, end_year):
     #         number of tokens
     absolute_counts = [round(frequencies[i] * total_counts[i]) for i in range(len(frequencies))]
 
-    return absolute_counts
-
-def _get(url):
-    if url:
-        resp = requests.get(url)
-        if resp.status_code == 200:
-            return resp
-    # print("Error while getting '{}': Status Code {}".format(url, resp.status_code))
-    return None
+    return absolute_counts, [x*100 for x in frequencies]
 
 def _load_total_counts(corpus_id, start_year, end_year):
     '''
@@ -106,7 +111,7 @@ def _load_total_counts(corpus_id, start_year, end_year):
     21: 'http://storage.googleapis.com/books/ngrams/books/googlebooks-spa-all-totalcounts-20120701.txt'
     }
 
-    response = _get(id_to_url[corpus_id]).text
+    response = get(id_to_url[corpus_id]).text
     # response = urllib2.urlopen(urllib2.Request(id_to_url[corpus_id]))
 
     total_counts = []

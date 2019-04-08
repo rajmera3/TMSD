@@ -1,34 +1,20 @@
-import requests
-import urllib
 from bs4 import BeautifulSoup
 import string
+from utils import get
 
 # generator
 def getWordsAndDefinition():
-	# words = []
 	base_url = "http://www.oxfordreference.com/view/10.1093/acref/9780195305678.001.0001/acref-9780195305678-e-"
 
-	for i in range(0, 886):
-		if i==342: continue # K/S which is invalid due to Firebase setup
-		print(i)
+	for i in range(438, 886):
 		url = base_url + str(i)
-		# words.append(_get_word(url))
-		word = _get_word(url)
-		if word:
-			yield word
-	# return words
+		word_def = _get_word_def(url) # dict of word and definition
+		if word_def:
+			yield word_def
 
-def _get(url):
-    if url:
-        resp = requests.get(url)
-        if resp.status_code == 200:
-            return resp
-    # print("Error while getting '{}': Status Code {}".format(url, resp.status_code))
-    return None
-
-def _get_word(url):
+def _get_word_def(url):
 	try:
-		resp = _get(url)
+		resp = get(url)
 		if not resp:
 			print("Error while getting term information from: " + url)
 			quit()
@@ -38,7 +24,7 @@ def _get_word(url):
 		definition = soup.find('div', class_='div1').find('p').get_text().strip()
 		definition = definition.lstrip(string.digits).rstrip(string.digits).strip()
 
-		print("{}: {}".format(word, definition))
+		print("{}\n{}".format(word, definition))
 		return {
 			"word": word,
 			"definition": definition
@@ -48,4 +34,11 @@ def _get_word(url):
 		return None
 
 
-# print(_get_word("http://www.oxfordreference.com/view/10.1093/acref/9780195305678.001.0001/acref-9780195305678-e-1"))
+# print(_get_word_def("http://www.oxfordreference.com/view/10.1093/acref/9780195305678.001.0001/acref-9780195305678-e-1"))
+
+# generate text of all brave new words
+# with open('brave_new_words_output.txt', 'a') as f:
+# 	termsDefs = getWordsAndDefinition()
+# 	for wordDef in termsDefs:
+# 		f.write(wordDef['word'] + '\n')
+# 		f.write(wordDef['definition'] + '\n')
