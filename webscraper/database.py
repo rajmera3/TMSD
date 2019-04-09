@@ -1,9 +1,9 @@
 from google.cloud import firestore
-import os
-import json
-
+from flask_heroku import Heroku
 # download service account json and put it in directory "keys"
 
+with open('ervice_account.json', 'w') as f:
+    json.dump(os.environ['GOOGLE_APPLICATION_CREDENTIALS'], f)
 db = firestore.Client.from_service_account_json('service_account.json')
 
 def getDocs():
