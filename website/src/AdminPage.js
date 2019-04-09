@@ -46,6 +46,37 @@ class AdminPage extends React.Component {
     });
   }
 
+  addToDb = () => {
+    let termsRaw = this.state.selectedOption;
+
+    if (termsRaw == null) {
+      alert("No items selected to be added...");
+    } else {
+      let termsToAdd = [];
+      for (let i = 0; i < termsRaw.length; i++) {
+        termsToAdd[i] = termsRaw[i].value;
+      }
+
+      let termsJson = {
+        "new-terms": termsToAdd
+      };
+
+      const http = new XMLHttpRequest();
+      const url = "https://tmsd-scraper.herokuapp.com/add";
+      http.open("POST", url);
+      http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      http.send(JSON.stringify(termsJson));
+      http.onreadystatechange = e => {
+        console.log(http.responseText);
+      };
+
+      //console.log(termsJson)
+      this.deleteRequests(termsRaw);
+
+      alert("Added...");
+    }
+  };
+
   isUserLoggedIn = async () => {
     try {
       let user = await this.checkLoginStatus();
@@ -149,7 +180,10 @@ class AdminPage extends React.Component {
                 isMulti={true}
                 closeMenuOnSelect={false}
               />
-              <a className="btn btn-ghost"> Add to Database </a>
+              <a className="btn btn-ghost" onClick={this.addToDb}>
+                {" "}
+                Add to Database{" "}
+              </a>
               <a className="btn btn-full" onClick={this.deleteRequests}>
                 {" "}
                 Delete Requests{" "}
