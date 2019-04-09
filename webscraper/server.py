@@ -1,10 +1,12 @@
 from flask import Flask
 from flask import request
 from flask import json as fjson
+from flask_cors import CORS
 import json
 import webscraper
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/add', methods = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'])
 def api_addTerms():
