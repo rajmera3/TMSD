@@ -64,7 +64,7 @@ class AdminPage extends React.Component {
       const http = new XMLHttpRequest();
       const url = "https://tmsd-scraper.herokuapp.com/add";
       http.open("POST", url);
-      http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      http.setRequestHeader("Content-Type", "application/json");
       http.send(JSON.stringify(termsJson));
       http.onreadystatechange = e => {
         console.log(http.responseText);
