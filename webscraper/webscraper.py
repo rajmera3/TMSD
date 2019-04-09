@@ -8,23 +8,44 @@ from utils import is_debug
 
 # fill in missing dates between academia and sf with 0's
 def preprocessWordFreq(academiaWordFreq, scienceFictionWordFreq):
-    def insort(arr, elem):
-        arr.append(elem)
-    academiaSet = set([x[0] for x in academiaWordFreq])
-    sfSet = set([x[0] for x in scienceFictionWordFreq])
-    dates = academiaSet.copy()
-    dates.update(sfSet)
-    dates = sorted(list(dates))
-    for d in dates:
-        if d >= 2000: # Google NGram may not have data up to this point
-            break
-        if d not in academiaSet:
-            academiaWordFreq.append((d, 0))
-        if d not in sfSet:
-            scienceFictionWordFreq.append((d, 0))
 
-    academiaWordFreq.sort(key = lambda x: x[0])
-    scienceFictionWordFreq.sort(key = lambda x: x[0])
+    def filter_above_percentage_of_max_value(academiaWordFreq, scienceFictionWordFreq, percentage=1):
+        max_value = max(max(x[1] for x in academiaWordFreq), max(x[1] for x in scienceFictionWordFreq))
+        percentage = 1
+        start_year = -1
+        for wordFreq in [academiaWordFreq, scienceFictionWordFreq]:
+            for i in range(len(wordFreq)):
+                year, freq = wordFreq[i]
+                if freq >= max_value * percentage / 100:
+                    start_year = max(start_year, year)
+                    break
+        academiaWordFreq = list(filter(lambda x: x[0] >= start_year, academiaWordFreq))
+        scienceFictionWordFreq = list(filter(lambda x: x[0] >= start_year, scienceFictionWordFreq))
+        return academiaWordFreq, scienceFictionWordFreq
+
+    def fill_zeros(academiaWordFreq, scienceFictionWordFreq):
+        def insort(arr, elem):
+            arr.append(elem)
+
+        academiaSet = set([x[0] for x in academiaWordFreq])
+        sfSet = set([x[0] for x in scienceFictionWordFreq])
+        dates = academiaSet.copy()
+        dates.update(sfSet)
+        dates = sorted(list(dates))
+        for d in dates:
+            if d >= 2000:  # Google NGram may not have data up to this point
+                break
+            if d not in academiaSet:
+                academiaWordFreq.append((d, 0))
+            if d not in sfSet:
+                scienceFictionWordFreq.append((d, 0))
+
+        academiaWordFreq.sort(key=lambda x: x[0])
+        scienceFictionWordFreq.sort(key=lambda x: x[0])
+
+    academiaWordFreq, scienceFictionWordFreq = filter_above_percentage_of_max_value(academiaWordFreq, scienceFictionWordFreq, percentage=1)
+    fill_zeros(academiaWordFreq, scienceFictionWordFreq)
+    return academiaWordFreq, scienceFictionWordFreq
 
 def addWord(word, definition='', percentages=False, start_date=''):
     if '/' in word:
@@ -40,16 +61,16 @@ def addWord(word, definition='', percentages=False, start_date=''):
     except Exception as e:
         if is_debug(): print("Cannot connect to dictionary. Error message: {}".format(e))
 
-    academiaWordFreq = academia.get_frequency(word, filter_one_percent=True, percentages=percentages)
+    academiaWordFreq = academia.get_frequency(word, percentages=percentages)
     if not academiaWordFreq:
         return None
 
-    scienceFictionWordFreq = science_fiction.get_frequency(word, filter_one_percent=True, percentages=percentages)
+    scienceFictionWordFreq = science_fiction.get_frequency(word, percentages=percentages)
     if not scienceFictionWordFreq:
         return None
 
     # fill in missing dates between academia and sf with 0's
-    preprocessWordFreq(academiaWordFreq, scienceFictionWordFreq)
+    academiaWordFreq, scienceFictionWordFreq = preprocessWordFreq(academiaWordFreq, scienceFictionWordFreq)
 
     # add to firestore
     database.addDoc(word, academiaWordFreq, scienceFictionWordFreq, description=definition, first_occurance=start_date)
@@ -77,14 +98,14 @@ def addWordsFromTermsLoaded(filename='brave_new_words_output.txt', percentages=F
 
     with open(filename, 'r') as f:
         lines = [line.strip() for line in f.readlines()]
-        start=False
+        # start=False
         for i in range(0, len(lines) // 2):
             word = lines[2*i]
             definition = lines[2*i+1]
-            if not start and word == 'K/S':
-                start=True
-            elif not start:
-                continue
+            # if not start and word == 'K/S':
+            #     start=True
+            # elif not start:
+            #     continue
             print(word)
             output = addWord(word, definition=definition, percentages=percentages)
             if not output:
@@ -115,5 +136,5 @@ def addWordsFromTermsLive(percentages=False):
 # addWord('Time travel')
 # addSfEncyclopediaThemes()
 
-# print(addWord('alien'))
+# print(addWord('ai'))
 # addWord('Alien')

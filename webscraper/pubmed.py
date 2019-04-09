@@ -29,20 +29,12 @@ def _get_result_count(query):
 	return result_count
 
 
-def get_frequency(query, filter_one_percent=True, percentages=False):
+def get_frequency(query, percentages=False):
 	# returns percentage of PubMed citations this result appears
 	result_count = _get_result_count(query)
 	if result_count is None: return None
 	total_count = _get_total_count()
 	years = sorted([year for year in result_count])
-
-	max_result = max([x for x in result_count.values()])
-	if filter_one_percent:
-		i = 0
-		while result_count[years[i]] < 0.01 * max_result:
-			i += 1
-		# filter
-		years = years[i:]
 
 	if percentages:
 		result_perc = [(year, 100 * result_count[year] / total_count[year]) for year in years]
