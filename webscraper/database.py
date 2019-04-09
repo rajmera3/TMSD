@@ -1,5 +1,6 @@
 from google.cloud import firestore
 from flask_heroku import Heroku
+import json
 # download service account json and put it in directory "keys"
 
 with open('service_account.json', 'w') as f:
