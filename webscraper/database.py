@@ -4,8 +4,9 @@ import json
 import os
 # download service account json and put it in directory "keys"
 
+key = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
 with open('service_account.json', 'w') as f:
-    json.dump(os.environ['GOOGLE_APPLICATION_CREDENTIALS'], f)
+    json.dump(json.loads(key, strict=False), f)
 db = firestore.Client.from_service_account_json('service_account.json')
 
 def getDocs():
