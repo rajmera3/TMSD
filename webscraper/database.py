@@ -1,7 +1,10 @@
 from google.cloud import firestore
+import os
+import json
 
 # download service account json and put it in directory "keys"
-db = firestore.Client.from_service_account_json('./keys/service_account.json')
+
+db = firestore.Client.from_service_account_json('service_account.json')
 
 def getDocs():
     # Then query for documents
