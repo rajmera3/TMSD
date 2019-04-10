@@ -3,6 +3,7 @@ from flask import request
 from flask import json as fjson
 from flask_cors import CORS
 import json
+import sys
 import webscraper
 
 app = Flask(__name__)
@@ -42,7 +43,33 @@ def api_removeTerms():
         return "Reran the scraper/Db updated! \n"
     else:
         return "Use POST to rerun the scraper! :D\n"
-    
+
+def errorMessage():
+    return 'Arguments must be in form: python3 server.py <local=("y", "n")> <credentials_filepath>'
 
 if __name__ == '__main__':
+    ws = None
+    if len(sys.argv) == 2:
+        local_arg = sys.argv[1]
+        if local_arg == 'y' or local_arg == 'yes':
+            local = True
+        elif local_arg == 'n' or local_arg == 'no':
+            local = False
+        else:
+            sys.exit(errorMessage())
+        ws = webscraper.Webscraper(local=local)
+    elif len(sys.argv) == 3:
+        local_arg = sys.argv[1]
+        if local_arg == 'y' or local_arg == 'yes':
+            local = True
+        elif local_arg == 'n' or local_arg == 'no':
+            local = False
+        else:
+            sys.exit(errorMessage())
+
+        credentials_filepath = sys.argv[2]
+        ws = webscraper.Webscraper(credentials_filepath=credentials_filepath, local=local)
+    else:
+        ws = webscraper.Webscraper()
+
     app.run()
