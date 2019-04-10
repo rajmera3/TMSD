@@ -45,7 +45,8 @@ def api_removeTerms():
         return "Use POST to rerun the scraper! :D\n"
 
 def errorMessage():
-    return 'Arguments must be in form: python3 server.py <local=("y", "n")> <credentials_filepath>'
+    return 'Arguments must be in form: python3 server.py <local=("y", "n")> <credentials_filepath>' \
+           '\nExample: python3 server.py y keys/service_account.json'
 
 if __name__ == '__main__':
     ws = None
