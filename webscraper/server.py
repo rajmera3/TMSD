@@ -45,12 +45,16 @@ def api_removeTerms():
         return "Use POST to rerun the scraper! :D\n"
 
 def errorMessage():
-    return 'Arguments must be in form: python3 server.py <local=("y", "n")> <credentials_filepath>' \
+    return 'Invalid Arguments. Must be in form: python3 server.py <local=("y", "n")> <credentials_filepath>' \
            '\nExample: python3 server.py y keys/service_account.json'
 
 if __name__ == '__main__':
     ws = None
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 1:
+        # no optional arguments given
+        ws = webscraper.Webscraper()
+    elif len(sys.argv) == 2:
+        # pass if server is running locally or not
         local_arg = sys.argv[1]
         if local_arg == 'y' or local_arg == 'yes':
             local = True
@@ -60,6 +64,7 @@ if __name__ == '__main__':
             sys.exit(errorMessage())
         ws = webscraper.Webscraper(local=local)
     elif len(sys.argv) == 3:
+        # pass if server is running locally and certificates filepath
         local_arg = sys.argv[1]
         if local_arg == 'y' or local_arg == 'yes':
             local = True
@@ -71,6 +76,6 @@ if __name__ == '__main__':
         credentials_filepath = sys.argv[2]
         ws = webscraper.Webscraper(credentials_filepath=credentials_filepath, local=local)
     else:
-        ws = webscraper.Webscraper()
+        sys.exit(errorMessage())
 
     app.run()
