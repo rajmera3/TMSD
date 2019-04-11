@@ -2,7 +2,9 @@
 ##### Team 8326
 Time Machine Space Dinosaur (TMSD) is a tool contracted by Tobias Wilson-Bates, an LMC professor at the Georgia Institute of Technology. Interested in the bidirectional relationship between science fiction and academia, in the past, Professor Bates has asked for multiple projects to help understand when and where one influences the other - for example, science fiction inspiring titans of the industry.  The TMSD website, specifically, helps literary researchers and science fiction enthusiasts understand the relationship, either causal or correlational, between terms appearing in science fiction and in academia. In contrast to existing research aids, TMSD creates a dynamic, templated list of terms with graphs and sources to provide insightful and valid information.
 
+
 Website built using [Swiftype App Search Demo](https://github.com/swiftype/app-search-demo-react)
+
 Line graph built using [Chartkick](https://github.com/ankane/react-chartkick)
 
 ## Release Notes
@@ -108,5 +110,15 @@ Troubleshooting:
 2. __Q: I get a "ModuleNotFoundError" when running the flask app using python3.__
     You should have installed all the required modules in the "Build instructions" using a virtual environment. Make sure your terminal or command prompt has (venv) in front of it. If it doesn't, run ``source venv/bin/activate`` on Mac/Linux or ``.\venv\Scripts\activate`` on Windows.
 3. __Q: I try to run ``python3 server.py y`` but get this error: FileNotFoundError: [Errno 2] No such file or directory: 'service_account.json'__
-    Make sure
+    Make sure you downloaded the credentials file, renamed it to "service_account.json", and put it in the correct location (webscraper folder) from the "Installation" section.
+4. __Q: How do I download the service_account.json file?__
+    You must download the credentials file from the [Firebase Admin SDK console](https://console.firebase.google.com/u/0/project/tmsd-577fd/settings/serviceaccounts/adminsdk). You can only click on this link if you are signing in from a preapproved account. The most convenient account that is already preapproved belongs to timemachinespacedino@gmail.com. When you are asked to sign in, log into this account using the password. The password must be requested from this project's client (tgbates@gatech.edu) as it was only provided to him.
+5. __Q: How do I open terminal on Mac/Linux or command prompt on Windows?__
+    * Mac: Open Applications folder, open Utilities, and double click on Terminal. Alternatively, press Command+Spacebar to launch Spotlight, type "Terminal", and double click the search result.
+    * Linux: Shortcut is Ctrl+Alt+T
+    * Windows: Open the Start Menu (Windows 10 and Windows 7) or the Start Screen (Windows 8.1), and press the shortcut for the Command Prompt. Alternatively, pres Win+R keys, type in "cmd", and press Enter or click OK.
+6. __Q: How do I go to my root directory on terminal/command prompt?__
+    You must navigate to where you downloaded the project i.e. Downloads folder. To do this, use the command ``cd foldername``. To see the current list of files and folders at your location, use ``ls`` on Mac/Linux or ``dir`` on Windows. 
+7. __Q: I get the error "$: command not found"__
+    In the instructions, do not include ``$ `` for Mac/Linux or ``> `` for Windows when you run the commands. This is simply to differentiate between the two operating systems.
 
