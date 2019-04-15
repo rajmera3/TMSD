@@ -17,7 +17,9 @@ New software features:
 * Request a new term as user
 * Admin page to approve new terms and add to database
 
-Bug fixes: First version so no bug fixes
+Bug fixes: First version so no bug fixes. Major issues that we have come across during development that we have fixed:
+* Adding new terms to the database as an admin originally couldn't be done from the remote website as a Georgia Tech wifi was required to access the Pubmed and Oxford English Dictionary databases for the webscraper. Alternative ways of accessing the needed information were found that indirectly used the database, removing the dependency on GT wifi.
+* We originally used [SF Encyclopedia](http://www.sf-encyclopedia.com/category/themes/theme) to determine the initial list of terms. However, the amount of terms and issue with getting the correct matching definition proved problematic, and so we switched over to using an online version of Brave New Words instead.
 
 Known bugs and defects:
 * No partial searching- must include the full word of the term to search for it
