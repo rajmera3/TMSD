@@ -75,7 +75,7 @@ class TermPage extends React.Component {
           </p>
           <p style={styles.defText}>
             {" "}
-            <strong>Data Sources:</strong> Pubmed for Academia
+            <strong>Data Sources:</strong> Pubmed for Academia, Google NGram for Science Fiction
           </p>
         </div>
       </div>
