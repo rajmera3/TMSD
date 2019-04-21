@@ -99,7 +99,7 @@ class MainPage extends Component {
                             <div className="tmsd__input-wrapper">
                               <input
                                 className="tmsd__text-input"
-                                placeholder="Search science fiction term or author&#8230;"
+                                placeholder="Search science fiction term&#8230;"
                                 value={query}
                                 onChange={e =>
                                   searchActions.updateQuery(e.target.value)
