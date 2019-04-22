@@ -2,6 +2,7 @@ import React from "react";
 
 import ReactChartkick, { LineChart } from "react-chartkick";
 import Chart from "chart.js";
+import { RadioGroup, RadioButton, ReversedRadioButton } from 'react-radio-buttons';
 import createDatabaseClient from "./Database";
 
 const databaseClient = createDatabaseClient();
@@ -11,7 +12,7 @@ ReactChartkick.addAdapter(Chart);
 class TermPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: " " };
+    this.state = { graph_type: "frequency_graph" };
   }
 
   componentWillMount() {
@@ -29,9 +30,35 @@ class TermPage extends React.Component {
           // console.log("Document data:", doc.data());
           // console.log("Document name: " + doc.data().name);
 
+          var frequency_data = doc.data().dates;
+          var rate_data = [];
+          for (var i = 0; i < frequency_data.length; i++) {
+            var name = frequency_data[i]["name"]; // "Science Fiction" or "Academia"
+            var data = frequency_data[i]["data"]; // map of data to freq
+            var rateData = {}
+            var years = Object.keys(data).map(function(item) {
+                return parseInt(item, 10);
+            });
+            for (var j = Math.min(...years)+1; j < Math.max(...years); j++) {
+              if (!(j-1 in data) || !(j in data)) {
+                continue;
+              }
+              var prev_freq = data[j-1];
+              var curr_freq = data[j];
+              rateData[j] = 100 * (curr_freq-prev_freq)/prev_freq;
+            }
+            rate_data.push({
+              data: rateData,
+              name: name
+            });
+          }
+
+          console.log(frequency_data);
+
           this.setState({
             name: doc.data().name,
-            dates: doc.data().dates,
+            frequency_data: frequency_data,
+            rate_data: rate_data,
             description: doc.data().description,
             first_occurance: doc.data().first_occurance
           });
@@ -44,8 +71,35 @@ class TermPage extends React.Component {
     // console.log(alien);
   }
 
+  onChange(graph_type) {
+    this.setState({
+      graph_type: graph_type
+    });
+  }
+
+  renderGraph() {
+    if (this.state.graph_type == "frequency_graph") {
+      return (<LineChart
+              title="Frequency in Academia and Science Fiction"
+              xtitle="Year"
+              ytitle="Frequency in Source"
+              height="42vh"
+              data={this.state.frequency_data}
+              colors={["#3899E8", "#F55452", "9831FF"]}
+            />)
+    } else if (this.state.graph_type == "rate_graph") {
+      return (<LineChart
+              title="Percentage of Change in Frequency from Previous Year"
+              xtitle="Year"
+              ytitle="Percentage of Change"
+              height="42vh"
+              data={this.state.rate_data}
+              colors={["#3899E8", "#F55452", "9831FF"]}
+            />)
+    }
+  }
+
   render() {
-    console.log(this.state.dates)
     return (
       <div>
         <div style={styles.header}>
@@ -57,11 +111,16 @@ class TermPage extends React.Component {
         </div>
 
         <div style={styles.graph} className="graph">
-          <LineChart
-            height="42vh"
-            data={this.state.dates}
-            colors={["#3899E8", "#F55452", "9831FF"]}
-          />
+          {this.renderGraph()}
+          <p style={styles.select_graph}>Type of graph to display:</p>
+        <RadioGroup onChange={ this.onChange.bind(this) } horizontal value="frequency_graph">
+          <RadioButton value="frequency_graph" iconSize={20}>
+            Frequency
+          </RadioButton>
+          <RadioButton value="rate_graph" iconSize={20}>
+            Rate of Change
+          </RadioButton>
+        </RadioGroup>
         </div>
 
         <div style={styles.definition} className="graph">
@@ -109,6 +168,10 @@ const styles = {
   defText: {
     textAlign: "left",
     color: "black"
+  },
+  select_graph: {
+    width: "100%",
+    textAlign:"center"
   }
 };
 
