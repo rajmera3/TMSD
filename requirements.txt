@@ -39,7 +39,7 @@ matplotlib==3.0.2
 modulegraph==0.17
 networkx==2.2
 numpy==1.15.4
-Pillow==5.4.1
+Pillow==6.2.0
 protobuf==3.7.1
 py2app==0.19
 pyasn1==0.4.5
