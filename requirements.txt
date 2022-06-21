@@ -38,7 +38,7 @@ MarkupSafe==1.1.0
 matplotlib==3.0.2
 modulegraph==0.17
 networkx==2.2
-numpy==1.15.4
+numpy==1.22.0
 Pillow==5.4.1
 protobuf==3.7.1
 py2app==0.19
