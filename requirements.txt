@@ -40,7 +40,7 @@ modulegraph==0.17
 networkx==2.2
 numpy==1.15.4
 Pillow==5.4.1
-protobuf==3.7.1
+protobuf==3.18.3
 py2app==0.19
 pyasn1==0.4.5
 pyasn1-modules==0.2.4
